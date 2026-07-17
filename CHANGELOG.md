@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.2] - 2026-07-17
+
+Fleet follow-up to stapel-core 0.12.0 (legacy shim sweep). Also re-pins
+member ceilings that had gone stale since 0.1.1: `stapel-categories` had
+since had a breaking bump to 0.5.0 and `stapel-attributes` to 0.4.0,
+both outside this composite's old `<0.5`/`<0.4` ceilings — publish would
+have hit ResolutionImpossible even with the core fix. Suite green.
+
+### Changed
+- `stapel-core` ceiling `<0.12` → `<0.13`.
+- `stapel-categories` ceiling `<0.5` → `<0.6`.
+- `stapel-attributes` ceiling `<0.4` → `<0.5`.
+
 ## [0.1.1] - 2026-07-17
 
 ### Changed
