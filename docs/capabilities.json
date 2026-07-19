@@ -1,0 +1,30 @@
+{
+  "module": "stapel-shop",
+  "version": "0.1.2",
+  "provides": "Composite preset for a catalog shop (categories + typed attributes + listings + reviews): wires stapel-categories, stapel-listings and stapel-reviews into one INSTALLED_APPS/urls/config bundle, defaults reviews' TARGET_TYPES to the catalog's listings, and owns the one piece of real cross-domain glue a composite is allowed to know both sides of: ListingReviewSummaryProjection (reviews -> listings per-listing rating aggregate, local live_query in the monolith or event-carried state transfer when reviews is split into its own service).",
+  "axes": [],
+  "extension_points": [],
+  "operations_total": 0,
+  "requires": [
+    {
+      "module": "stapel-categories",
+      "optional": false,
+      "reason": "composite member — category tree + typed features (preset.py INSTALLED_APPS/URL_INCLUDES)"
+    },
+    {
+      "module": "stapel-listings",
+      "optional": false,
+      "reason": "composite member — the shop's catalog items (preset.py INSTALLED_APPS/URL_INCLUDES)"
+    },
+    {
+      "module": "stapel-reviews",
+      "optional": false,
+      "reason": "composite member — reviews targeting listings, aggregated by shop's own ListingReviewSummaryProjection (preset.py INSTALLED_APPS/URL_INCLUDES, projections.py:9-38)"
+    },
+    {
+      "module": "stapel-attributes",
+      "optional": false,
+      "reason": "L1 library dependency of stapel-categories/stapel-listings (typed feature/attribute values); pip dependency, not a Django app (preset.py comment 'L1 libraries ... are pip dependencies, NOT Django apps')"
+    }
+  ]
+}
