@@ -46,7 +46,7 @@ package-dir = {"stapel_shop" = "."}
 packages = ["stapel_shop", "stapel_shop.migrations", "stapel_shop.tests"]
 
 [tool.setuptools.package-data]
-stapel_shop = ["py.typed", "migrations/*.py"]
+stapel_shop = ["py.typed", "migrations/*.py", "docs/capabilities.json", "docs/flows.json", "docs/errors.json", "CONFIG.MD"]
 
 [tool.ruff]
 target-version = "py311"
