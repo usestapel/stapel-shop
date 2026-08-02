@@ -1,5 +1,9 @@
 # stapel-shop
 
+[![license](https://img.shields.io/github/license/usestapel/stapel-shop)](https://github.com/usestapel/stapel-shop/blob/main/LICENSE)
+[![status](https://img.shields.io/badge/status-unreleased-orange)](https://github.com/usestapel/stapel-shop)
+
+Не опубликовано на PyPI. Установка из исходников: `pip install git+https://github.com/usestapel/stapel-shop`
 Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections.
 
 > Likes/favourites are NOT included yet: `stapel-engagement` does not
