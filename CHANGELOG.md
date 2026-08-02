@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.5] - 2026-08-02
+
+### Fixed - `tests/test_contract.py` (added in 0.1.4) needs `stapel-tools` on the release track too
+
+`ci.yml`'s test job already installs `"stapel-tools>=0.9.1,<1"` explicitly
+(via its own migration-lint fix), but `publish.yml`'s test job did not —
+`stapel_tools.llms_txt` (imported by `tests/test_contract.py`) failed to
+collect there with `ModuleNotFoundError`, and the v0.1.4 tag's publish run
+never got past `test` (no wheel was built, nothing was published — this
+module has never reached PyPI regardless, see below). `publish.yml` now
+installs `"stapel-tools>=0.9.1,<1"` in "Install test dependencies" too.
+
 ## [0.1.4] - 2026-08-02
 
 Packaging/CI only, no runtime change.
