@@ -1,6 +1,7 @@
 # stapel-shop
 
 [![license](https://img.shields.io/github/license/usestapel/stapel-shop)](https://github.com/usestapel/stapel-shop/blob/main/LICENSE)
+[![llms.txt](https://img.shields.io/badge/llms.txt-blue)](https://github.com/usestapel/stapel-shop/blob/main/docs/llms.txt)
 [![status](https://img.shields.io/badge/status-unreleased-orange)](https://github.com/usestapel/stapel-shop)
 
 Не опубликовано на PyPI. Установка из исходников: `pip install git+https://github.com/usestapel/stapel-shop`
