@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.1.4] - 2026-08-02
+
+Packaging/CI only, no runtime change.
+
+### Changed
+- Canonical `ci.yml` with coverage, `codecov.yml`, Python 3.14 trove
+  classifier, badge canon (this module is not yet on PyPI, so only the
+  license + CI-status badges apply — no pypi/downloads/coverage/python
+  badges, and the README honestly says install-from-source).
+- Contract documents (`docs/capabilities.json`, `docs/flows.json`,
+  `docs/errors.json`, `CONFIG.MD`) ship inside the wheel via `package-data` (#184).
+- New Makefile (the module had none) with `contract`/`contract-check`
+  targets plus `tests/test_contract.py`, wiring `docs/llms.txt` — the
+  fifth contract artifact (badge-canon §3) — from the hand-authored
+  `docs/capabilities.json`; now packaged into the wheel.
+- `docs/capabilities.json`'s hand-maintained `version` field brought back
+  in line with `pyproject.toml` (it had drifted to 0.1.2 while the package
+  moved to 0.1.3).
+
 ## [0.1.2] - 2026-07-17
 
 Fleet follow-up to stapel-core 0.12.0 (legacy shim sweep). Also re-pins
