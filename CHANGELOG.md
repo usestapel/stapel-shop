@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.2.1] - 2026-08-21
+
+### Changed — `stapel-listings` pin follows the fleet to 0.4
+
+`>=0.3,<0.4` → `>=0.4,<0.5`. The composite was fixing an older combination
+than the fleet ships. Verified against 0.4.0 in a clean venv on released
+packages: full suite green, no missing migrations, `pip check` clean.
+
+Nothing in the composite had to change for 0.4.0's own changes. Checked, one
+by one, because a composite's job is exactly to notice:
+
+- **The new `blocked` status / `published→blocked` takedown edge.** Nothing
+  here enumerates listing statuses — the composite owns one Projection over
+  reviews' facts and a preset of plain data; it never reads
+  `ListingStatus`. Adding a state cannot desynchronise a switch that does not
+  exist.
+- **`features_search` strictly derived, `listings.search_documents` /
+  `search_export`.** Listings' own comm surface; the composite declares no
+  search glue (there is no search member to glue it to).
+- **The `moderation.completed` consumes-schema widened target-generically.**
+  This one DOES touch the composite: listings' consumer used to be
+  `{listing_id}`-shaped and is now target-generic, so it shares that topic with
+  reviews' consumer in this process, and each decides "is this mine?" by its
+  own `MODERATION_TARGET_TYPE`. The two defaults are disjoint (`listing` vs
+  `review`), so co-installation is correct out of the box — and
+  `tests/test_composite.py` now holds that as a gate instead of an assumption:
+  equal names would apply a review takedown to a listing sharing its key. A
+  host that respells either name must configure both.
+
 ## [0.2.0] - 2026-08-21
 
 ### Fixed — `ListingReviewSummaryProjection` did not actually work against the producer

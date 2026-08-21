@@ -21,6 +21,27 @@ def test_app_config_mounts():
     assert cfg.name == "stapel_shop"
 
 
+def test_moderation_verdicts_are_not_crossed_between_members():
+    """Two members subscribe to the SAME target-generic verdict topic.
+
+    stapel-listings 0.4 made its ``moderation.completed`` consumer
+    target-generic (it was `{listing_id}`-shaped before), so in this composite
+    it shares one topic with reviews' consumer, and each decides "is this mine?"
+    by its own ``MODERATION_TARGET_TYPE``. Those two names must stay disjoint —
+    equal names would apply a review takedown to a listing with the same key.
+    A composite that respells either one configures BOTH.
+    """
+    from stapel_core.comm.registry import action_registry
+    from stapel_listings.conf import listings_settings
+    from stapel_reviews.conf import reviews_settings
+
+    assert len(action_registry.handlers("moderation.completed")) >= 2
+    assert (
+        listings_settings.MODERATION_TARGET_TYPE
+        != reviews_settings.MODERATION_TARGET_TYPE
+    )
+
+
 def test_projection_declaration_registered_and_valid():
     """The glue projection is declared, resolves LOCAL when the owner module
     is co-installed (the composite's normal monolith shape), and passes the
