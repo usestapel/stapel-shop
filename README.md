@@ -24,7 +24,7 @@ pip install stapel-shop
 
 | Fact | Value |
 |---|---|
-| Version | `0.1.5` |
+| Version | `0.2.0` |
 | Python | `>=3.11` (3.11, 3.12, 3.13, 3.14) |
 | Fleet dependencies | [`stapel-attributes`](https://github.com/usestapel/stapel-attributes) · [`stapel-categories`](https://github.com/usestapel/stapel-categories) · [`stapel-listings`](https://github.com/usestapel/stapel-listings) · [`stapel-reviews`](https://github.com/usestapel/stapel-reviews) |
 
@@ -87,12 +87,14 @@ urlpatterns = [
 - `stapel_shop.projections.ListingReviewSummaryProjection` — reviews→listings
   rating aggregate. Local mode (monolith): live reads through
   `reviews.aggregates_by_keys`. Remote mode: `ListingReviewSummary` table fed
-  from `reviews.review.published/hidden` facts.
+  from `reviews.review.published/hidden` facts, rebuilt from
+  `reviews.aggregates_export`.
 - Read it ONLY through
-  `stapel_core.comm.projections.read("shop.listing_review_summary", keys=[...])`.
-- Gap (stapel-reviews 0.1.0): `reviews.aggregates_by_keys` and
-  `reviews.aggregates_export` are not shipped yet — reads/rebuild fail loudly
-  until stapel-reviews adds them (declared here with the canonical names).
+  `stapel_core.comm.projections.read("shop.listing_review_summary", keys=[...])`
+  — `{key: {"avg": float, "count": int}}`, the same shape in both modes; a key
+  with no published review is absent from the answer.
+- Requires stapel-reviews >= 0.2, the release that shipped both Functions this
+  projection is declared against.
 
 ## License
 

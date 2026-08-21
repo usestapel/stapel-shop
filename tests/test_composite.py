@@ -49,6 +49,9 @@ def test_projection_not_wired_to_bus_in_local_mode():
 
 
 def test_apply_maps_aggregate_payload():
+    """The fact's ``aggregate`` maps onto the read-model columns, which carry
+    the owner's names so both modes of ``read()`` answer one shape (see
+    tests/test_projection_modes.py)."""
     from stapel_core.comm.projections import projection_registry
 
     proj = projection_registry.get("shop.listing_review_summary")
@@ -60,4 +63,4 @@ def test_apply_maps_aggregate_payload():
             "aggregate": {"avg": 4.5, "count": 12},
         }
 
-    assert proj.apply(_Ev()) == {"rating_avg": 4.5, "rating_count": 12}
+    assert proj.apply(_Ev()) == {"avg": 4.5, "count": 12}

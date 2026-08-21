@@ -15,13 +15,18 @@ class ListingReviewSummary(ProjectionModel):
     ``projection_key`` == the review target_key (the listing id). Read it
     through ``stapel_core.comm.projections.read("shop.listing_review_summary",
     keys=[...])`` — never via the ORM directly (that hard-wires remote mode).
+
+    The columns are named ``avg``/``count`` — the owner's names, deliberately.
+    ``read()`` returns the model's own column names in remote mode and the
+    owner's ``live_query`` answer verbatim in local mode, so identical column
+    names are the only way to honour core's "identical shape in both modes".
     """
 
-    rating_avg = models.FloatField(default=0.0)
-    rating_count = models.PositiveIntegerField(default=0)
+    avg = models.FloatField(default=0.0)
+    count = models.PositiveIntegerField(default=0)
 
     class Meta:
         app_label = "shop"
 
     def __str__(self):
-        return f"listing {self.projection_key}: {self.rating_avg} ({self.rating_count})"
+        return f"listing {self.projection_key}: {self.avg} ({self.count})"

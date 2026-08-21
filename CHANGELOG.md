@@ -1,5 +1,56 @@
 # Changelog
 
+## [0.2.0] - 2026-08-21
+
+### Fixed — `ListingReviewSummaryProjection` did not actually work against the producer
+
+stapel-reviews 0.2.0 shipped the two Functions this projection has named since
+0.1.0 (`reviews.aggregates_by_keys`, `reviews.aggregates_export`), and the
+first real contact proved three defects on this side. All three are now
+covered by tests that run against the real producer, not a mock
+(`tests/test_projection_modes.py`).
+
+- **`from_snapshot()` was missing, so remote-mode `rebuild()` raised
+  `TypeError`.** An export row is `{target_key, target_type, avg, count, seq}`;
+  the inherited default drops only `target_key`/`seq` and handed the model
+  `target_type` plus the owner's field names —
+  `ListingReviewSummary() got unexpected keyword arguments: 'target_type',
+  'avg', 'count'`. The projection now maps both of the owner's wire shapes (the
+  fact's `aggregate` and an export row) through one mapper.
+- **`read()` answered a different shape in each mode**, breaking stapel-core's
+  "identical shape in both modes" contract: local mode returned the owner's
+  `{avg, count}` verbatim (core has no hook to rename a `live_query` answer),
+  remote mode returned the model's `{rating_avg, rating_count}`. Business code
+  written in the monolith would have broken the day reviews was split out. The
+  owner's names are now the contract shape on both sides.
+- **The declaration documented an export that does not exist.** The docstring
+  described both Functions as unshipped ("does not exist yet — remote-mode
+  rebuild fails loudly") and never recorded the page shape, while
+  `stapel_core.comm.projections._iter_snapshot` reads `resp["rows"]` and
+  reviews serves `{rows, cursor, total}`. The docstring now records the real
+  shapes: `{"keys": [...]} -> {key: {avg, count}}` for the `live_query`, and
+  `{rows, cursor, total}` with a per-row `seq` in unix milliseconds — the same
+  clock an Event timestamp uses, which is what lets a live fact arriving
+  mid-rebuild outrank the snapshot row.
+
+### Changed
+
+- `ListingReviewSummary.rating_avg`/`rating_count` renamed to `avg`/`count`
+  (migration `0002`, cutover-phase: add, carry the rows across, drop — one
+  release, no window where both names are live). The read-model's columns are
+  what remote-mode `read()` returns, so matching the owner's names is the only
+  way to give both modes one shape.
+- `stapel-reviews` floor raised to `>=0.2,<0.3` — the release that first
+  carries the two Functions this module is declared against. Below it, local
+  reads raise `FunctionNotRegistered` and rebuild has no source.
+
+### Known gap (unchanged)
+
+- reviews' facts and its export carry EVERY `target_type`, so remote mode also
+  materialises non-listing targets: harmless extra rows keyed by their
+  `target_key`, never joined to a listing. Payload filtering in the core
+  Projection primitive (or per-type topics in reviews) is the clean fix.
+
 ## [0.1.5] - 2026-08-02
 
 ### Fixed - `tests/test_contract.py` (added in 0.1.4) needs `stapel-tools` on the release track too
