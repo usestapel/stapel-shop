@@ -17,7 +17,7 @@ drift, not against a nonexistent surface list.
 
 Honest boundary: the REST of this module's ``capabilities.json`` is still
 hand-written (no schema/flows/errors triad emitter), so only
-``module``/``version``/absence-of-``surface`` are gated below.
+``module``/``version``/``surface`` are gated below.
 """
 import json
 from pathlib import Path
@@ -69,8 +69,11 @@ def test_version_tracks_pyproject():
 
 
 def test_surface_is_honestly_empty():
-    """No `surface` key at all — an empty list would still be a claim there
-    is something to say and nothing to show; the key's absence says there is
-    nothing published yet, matching the meta layer's `_comment`."""
+    """An EMPTY `surface` list, not an absent key — stapel_tools.surface's
+    ``patch_capabilities`` writes ``[]`` when the meta layer declares a
+    ``no_surface`` reason, precisely so "declared none" (this module) and
+    "nobody has filled this in yet" (an absent key) don't look identical to
+    a downstream reader (the fleet aggregate, the llms.txt renderer, ...).
+    See ``docs/capabilities.meta.json``'s `no_surface` for the reasoning."""
     doc = json.loads(COMMITTED.read_text())
-    assert "surface" not in doc
+    assert doc.get("surface") == []
