@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.2.2] - 2026-08-21
+
+### Changed — `stapel-listings` pin widens to admit 0.5
+
+`>=0.4,<0.5` → `>=0.4,<0.6`. Verified against 0.5.0 in a clean venv on
+released packages: full suite green (19/19), `makemigrations --check`
+reports no missing migrations, `pip check` clean.
+
+0.5.0's behaviour change — a live listing under re-moderation stays
+`published` (only `moderation_status` moves to `pending`; `POST
+.../publish/` now answers `"published"` for a live re-publish instead of
+`"pending"`) — has nothing here to touch. This composite owns one
+Projection over reviews' facts (`ListingReviewSummaryProjection`) plus a
+plain preset (`INSTALLED_APPS`/`URL_INCLUDES` data); it never reads
+`Listing.status` or `moderation_status`, so a state that was reachable by a
+different path is still unreachable from a switch that does not exist.
+Checked the same way 0.2.1 checked 0.4.0: nothing else in 0.5.0's CHANGELOG
+touches a surface this composite consumes.
+
 ## [0.2.1] - 2026-08-21
 
 ### Changed — `stapel-listings` pin follows the fleet to 0.4

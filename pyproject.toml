@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.1"
+version = "0.2.2"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -28,7 +28,7 @@ dependencies = [
     "stapel-core>=0.10,<1.0",
     "stapel-categories>=0.4,<0.6",
     "stapel-attributes>=0.3,<0.5",
-    "stapel-listings>=0.4,<0.5",
+    "stapel-listings>=0.4,<0.6",
     "stapel-reviews>=0.2,<0.3",
 ]
 
