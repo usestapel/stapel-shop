@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.2.3] - 2026-08-22
+
+### Changed — pins widen to admit `stapel-listings` 0.6 and `stapel-reviews` 0.3
+
+`stapel-listings>=0.4,<0.6` → `<0.7`; `stapel-reviews>=0.2,<0.3` → `<0.4`.
+
+This is the release that lets a fleet install **listings 0.6.2** — the one
+that closes four authorization holes on the listing surface (any
+authenticated caller could `PUT`/`PATCH` any listing; `GET /{id}/` served
+drafts, rejected, paused and blocked listings to anyone holding the id).
+Until now `pip` answered ResolutionImpossible for that bump, with this
+composite's pin as one of the two walls (darom-fleet, 2026-08-22).
+
+Nothing in the composite had to change. 0.6.0's own change is the contract
+triad (`docs/{schema,flows,errors}.json`) plus a declared-type fix on two
+serializers' `images`; 0.3.0 of reviews widens `GET /reviews` and
+`/aggregate` to anonymous reads and throttles them from its own namespace.
+`ListingReviewSummaryProjection` reads reviews' facts and the preset is
+plain data — neither touches a permission class or a serializer's declared
+type. Verified against listings 0.6.2 + reviews 0.3.0 in a clean venv on
+released packages: full suite green, `makemigrations --check` clean,
+`pip check` clean.
+
 ## [0.2.2] - 2026-08-21
 
 ### Changed — `stapel-listings` pin widens to admit 0.5
