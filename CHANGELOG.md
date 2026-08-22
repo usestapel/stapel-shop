@@ -11,7 +11,7 @@ that closes four authorization holes on the listing surface (any
 authenticated caller could `PUT`/`PATCH` any listing; `GET /{id}/` served
 drafts, rejected, paused and blocked listings to anyone holding the id).
 Until now `pip` answered ResolutionImpossible for that bump, with this
-composite's pin as one of the two walls (darom-fleet, 2026-08-22).
+composite's pin as one of the two walls (the client fleet, 2026-08-22).
 
 Nothing in the composite had to change. 0.6.0's own change is the contract
 triad (`docs/{schema,flows,errors}.json`) plus a declared-type fix on two
