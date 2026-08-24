@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.4] - 2026-08-24
+
+### Changed — pins widen to admit `stapel-listings` 0.7
+
+`stapel-listings>=0.4,<0.7` → `<0.8`. This is the release that lets a fleet
+install **listings 0.7.1** — geohash stamping on `Listing.save()` plus the
+`listings_backfill_geohash` management command (the fix for stapel-search
+0.2.2's geohash prefilter, which had nothing to prefilter against while
+every listing carried `geohash=""`). 0.7.0's only change was an additive
+route (`GET my/listings/`); this composite touches neither that route nor
+any listings internal beyond mounting `stapel_listings.urls`, so nothing
+here changes shape. Verified in a clean venv on released listings 0.7.1:
+full suite green (19 passed), `pip check` clean.
+
 ## [0.2.3] - 2026-08-22
 
 ### Changed — pins widen to admit `stapel-listings` 0.6 and `stapel-reviews` 0.3
