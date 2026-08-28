@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.4"
+version = "0.2.5"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -28,7 +28,14 @@ dependencies = [
     "stapel-core>=0.10,<1.0",
     "stapel-categories>=0.4,<0.6",
     "stapel-attributes>=0.3,<0.5",
-    "stapel-listings>=0.4,<0.8",
+    # <0.9, not <0.8: stapel-listings 0.8.0 closes a live anonymous enumeration
+    # oracle — the status probe returned owner_id and moderation_status for any
+    # id, over sequential ids, including other people's drafts and deleted rows.
+    # Held at <0.8 this composite pins a fleet to the leaking version, and pip
+    # refuses the resolution outright rather than warning. The only change to
+    # this composite's surface is that a stranger receives one boolean where it
+    # used to receive six fields; nothing here reads the removed ones.
+    "stapel-listings>=0.4,<0.9",
     "stapel-reviews>=0.2,<0.4",
 ]
 

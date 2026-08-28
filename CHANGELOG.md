@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.2.5] — 2026-08-28
+
+### The listings cap pinned every fleet to a leaking version
+
+`stapel-listings>=0.4,<0.8` kept deployments below 0.8.0, which closes a live
+anonymous enumeration oracle: the status probe returned `owner_id` and
+`moderation_status` for any listing id, over sequential ids, including other
+people's drafts, rejected and soft-deleted rows. Confirmed against a running
+stand before this was raised.
+
+pip refuses the resolution outright rather than warning, so the cap did not
+merely discourage the upgrade — it made it impossible while this composite was
+installed. Now `<0.9`.
+
+The only change 0.8.0 makes to this composite's surface is that a stranger
+receives one `is_deleted` boolean from the status probe where it used to
+receive six fields. Nothing here reads the removed ones.
+
 ## [0.2.4] - 2026-08-24
 
 ### Changed — pins widen to admit `stapel-listings` 0.7
