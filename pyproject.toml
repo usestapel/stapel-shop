@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.5"
+version = "0.2.6"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -35,8 +35,12 @@ dependencies = [
     # refuses the resolution outright rather than warning. The only change to
     # this composite's surface is that a stranger receives one boolean where it
     # used to receive six fields; nothing here reads the removed ones.
-    "stapel-listings>=0.4,<0.9",
-    "stapel-reviews>=0.2,<0.4",
+    # <0.10, not <0.9: listings 0.9.0 and reviews 0.4.0 add
+    # ALLOW_ANONYMOUS_WRITES — the server-side guest wall. A fleet that
+    # declares it while held under these caps gets an inert setting: the guest
+    # is an authenticated user, passes IsAuthenticated, and can publish.
+    "stapel-listings>=0.4,<0.10",
+    "stapel-reviews>=0.2,<0.5",
 ]
 
 [project.urls]

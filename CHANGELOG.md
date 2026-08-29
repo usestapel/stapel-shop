@@ -1,5 +1,35 @@
 # Changelog
 
+## [0.2.6] — 2026-08-30
+
+### The caps made the guest wall unbuildable
+
+`stapel-listings>=0.4,<0.9` and `stapel-reviews>=0.2,<0.4` held every fleet
+below listings **0.9.0** and reviews **0.4.0** — the two releases that
+introduce `ALLOW_ANONYMOUS_WRITES`, the server-side decision on whether a
+guest may write.
+
+A client fleet running the classified composite already writes
+`STAPEL_LISTINGS["ALLOW_ANONYMOUS_WRITES"] = False` and
+`STAPEL_REVIEWS["ALLOW_ANONYMOUS_WRITES"] = False` in its settings. On the
+installed versions the key does not exist, so nothing reads it: a guest is a
+real authenticated user, satisfies `IsAuthenticated`, and can create and
+publish a listing and leave a review. The setting looks like a wall in the
+config and is a comment in practice. Confirmed against the running stand
+before this was raised.
+
+Neither cap could be widened from the fleet side — pip answers
+ResolutionImpossible rather than warning, and this composite was one of the
+two walls (the other is `stapel-classified`, which lifts its own in 0.4.2).
+Now `stapel-listings>=0.4,<0.10` and `stapel-reviews>=0.2,<0.5`.
+
+Nothing in the composite changes shape. Both new releases are additive on the
+surfaces this package touches: it mounts `stapel_listings.urls` and reads
+reviews' facts through `ListingReviewSummaryProjection`; the preset is plain
+data. Neither the new setting nor listings 0.9.0's guest-favourite merge on
+sign-in reaches a permission class or a declared serializer type here.
+Verified against listings 0.9.0 + reviews 0.4.0: full suite green (19 passed).
+
 ## [0.2.5] — 2026-08-28
 
 ### The listings cap pinned every fleet to a leaking version
