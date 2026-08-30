@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.6"
+version = "0.2.7"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -26,8 +26,16 @@ classifiers = [
 # STAPEL_LIBS registry / each member lib already uses, fixing the combination.
 dependencies = [
     "stapel-core>=0.10,<1.0",
-    "stapel-categories>=0.4,<0.6",
-    "stapel-attributes>=0.3,<0.5",
+    # attributes-v2 wave: categories 0.7.0, attributes 0.5.1 and listings
+    # 0.10.0 ship one change together — FeatureDef gains rules/description/
+    # example/default/hints/group, requiredness becomes the rule state rather
+    # than `mandatory`, a rule-hidden feature is dropped from the DAO, and the
+    # ref_select/ref_hierarchical_select types arrive. categories 0.7.0 itself
+    # requires stapel-attributes>=0.5, so the old <0.5 cap here had NO
+    # solution: pip answered ResolutionImpossible for anything installing this
+    # composite next to the wave (stapel-classified 0.5.0 above all).
+    "stapel-categories>=0.4,<0.8",
+    "stapel-attributes>=0.3,<0.6",
     # <0.9, not <0.8: stapel-listings 0.8.0 closes a live anonymous enumeration
     # oracle — the status probe returned owner_id and moderation_status for any
     # id, over sequential ids, including other people's drafts and deleted rows.
@@ -39,7 +47,11 @@ dependencies = [
     # ALLOW_ANONYMOUS_WRITES — the server-side guest wall. A fleet that
     # declares it while held under these caps gets an inert setting: the guest
     # is an authenticated user, passes IsAuthenticated, and can publish.
-    "stapel-listings>=0.4,<0.10",
+    # <0.11, not <0.10: listings 0.10.0 is this composite's half of the
+    # attributes-v2 wave above — conditional requiredness and rule-hidden
+    # features on the publish path, ref values carried as codes + labels
+    # through the four projections.
+    "stapel-listings>=0.4,<0.11",
     "stapel-reviews>=0.2,<0.5",
 ]
 

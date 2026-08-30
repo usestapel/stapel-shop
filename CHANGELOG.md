@@ -1,5 +1,56 @@
 # Changelog
 
+## [0.2.7] — 2026-08-30
+
+### The attributes cap had no solution at all
+
+`stapel-attributes>=0.3,<0.5` was not merely stale after the attributes-v2
+wave — it was self-contradictory next to its own sibling. **stapel-categories
+0.7.0 requires `stapel-attributes>=0.5,<1.0`**, so no version of attributes
+satisfied both this composite and a member of it. pip answers
+`ResolutionImpossible`, not a warning, and `stapel-classified` 0.5.0 — which
+pins categories 0.7.0, attributes 0.5.1 and listings 0.10.0 while keeping
+`stapel-shop>=0.2.6,<0.3` — could not be installed at all.
+
+Now `stapel-categories>=0.4,<0.8`, `stapel-attributes>=0.3,<0.6`,
+`stapel-listings>=0.4,<0.11`. Floors are unchanged: nothing here grew a
+dependency on the new surface.
+
+The wave itself (attributes 0.5.1 / categories 0.7.0 / listings 0.10.0) gives
+`FeatureDef` its `rules`, `description`, `example`, `default`, `hints` and
+`group`; makes requiredness the rule state rather than static `mandatory`;
+drops a rule-hidden feature from the DAO instead of merely leaving it
+unvalidated; and adds `ref_select` / `ref_hierarchical_select`, whose values
+travel as vocabulary **codes** plus a `labels` snapshot.
+
+None of that reaches this composite's own surface, and that is a fact about
+the code, not an assumption: this package reads no feature config and no
+feature DAO anywhere. `preset.py` is plain data (`INSTALLED_APPS`,
+`URL_INCLUDES`, reviews' `TARGET_TYPES`); the single glue projection is
+reviews → listings and touches `avg`/`count` only. There is no type-slug
+list to widen, no `mandatory` read, and no `select` value formatted without
+its `labels`. Verified against the three released siblings: full suite green
+(21 passed).
+
+One composition note for a project that uses the new ref types: a `ref_*`
+config is loud without a registered vocabulary resolver
+(`STAPEL_ATTRIBUTES["VOCABULARY_RESOLVER"]`, or
+`register_vocabulary_resolver` from an `AppConfig.ready()`). The resolver
+implementation ships outside stapel-attributes, so wiring one is a project
+decision; adding a member to this composite would be a minor bump, not this
+one.
+
+### Added — a pin-coherence gate (`tests/test_pin_coherence.py`, 2 tests)
+
+Every release since 0.2.4 has fixed the same defect: a cap here excluded a
+member version the fleet had to install. Nothing in this repo could catch it,
+because no code here reads a member's surface — the contradiction lives
+entirely in metadata. So the gate reads metadata: this package's specifiers
+must admit the member versions the suite actually ran against, and every
+member's own requirement on a fellow stapel distribution must be satisfied by
+that same set. Run against 0.2.6's pins with the wave installed, it named all
+three stale caps by version and specifier before they were widened.
+
 ## [0.2.6] — 2026-08-30
 
 ### The caps made the guest wall unbuildable
