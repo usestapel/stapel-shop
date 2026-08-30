@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.9] — 2026-08-31
+
+### Changed
+
+- **`stapel-attributes<0.6` → `<0.7`.** 0.6.0 adds the composite `group` kind
+  and both members this composite pins — stapel-categories 0.8.3 and
+  stapel-listings 0.10.2 — require it. Held at `<0.6` this line has no
+  solution: pip answers `ResolutionImpossible` for anything installing this
+  composite next to them, which is the same trap the `stapel-categories` line
+  above already records twice. Nothing here reads the new type; the range is
+  the whole coupling.
+
 ## [0.2.8] — 2026-08-31
 
 ### The categories cap excluded the release that stops losing rows on a re-sync

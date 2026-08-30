@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.8"
+version = "0.2.9"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -44,7 +44,14 @@ dependencies = [
     # stops losing rows on a re-sync. 0.8.1 additionally makes a full-catalog
     # import finish at all (the tree cache was rebuilt once per row written).
     "stapel-categories>=0.4,<0.9",
-    "stapel-attributes>=0.3,<0.6",
+    # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
+    # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
+    # A composite whose whole subject is an imported marketplace catalog —
+    # where 2 468 Avito fields ARE composites — cannot cap a fleet under the
+    # release that can hold one: held at <0.6, pip answers ResolutionImpossible
+    # for anything installing this next to categories 0.8.3, which is the same
+    # trap the categories line above records twice.
+    "stapel-attributes>=0.3,<0.7",
     # <0.9, not <0.8: stapel-listings 0.8.0 closes a live anonymous enumeration
     # oracle — the status probe returned owner_id and moderation_status for any
     # id, over sequential ids, including other people's drafts and deleted rows.

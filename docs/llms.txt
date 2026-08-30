@@ -1,4 +1,4 @@
-# stapel-shop 0.2.8
+# stapel-shop 0.2.9
 
 Composite preset for a catalog shop (categories + typed attributes + listings + reviews): wires stapel-categories, stapel-listings and stapel-reviews into one INSTALLED_APPS/urls/config bundle, defaults reviews' TARGET_TYPES to the catalog's listings, and owns the one piece of real cross-domain glue a composite is allowed to know both sides of: ListingReviewSummaryProjection (reviews -> listings per-listing rating aggregate, local live_query in the monolith or event-carried state transfer when reviews is split into its own service).
 
