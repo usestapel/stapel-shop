@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.7"
+version = "0.2.8"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -34,7 +34,16 @@ dependencies = [
     # requires stapel-attributes>=0.5, so the old <0.5 cap here had NO
     # solution: pip answered ResolutionImpossible for anything installing this
     # composite next to the wave (stapel-classified 0.5.0 above all).
-    "stapel-categories>=0.4,<0.8",
+    # <0.9, not <0.8: stapel-categories 0.8.0 stops keying a catalog re-import
+    # on the SLUG and keys it on `(external_source, external_id)` instead. An
+    # imported category's slug comes from the source catalogue's node path, so
+    # a source-side rename moves the slug while the node id stays — and under
+    # the old key that re-import soft-deleted the row holding the listings and
+    # created a duplicate beside it. A composite whose whole subject is an
+    # imported marketplace catalog cannot cap a fleet under the release that
+    # stops losing rows on a re-sync. 0.8.1 additionally makes a full-catalog
+    # import finish at all (the tree cache was rebuilt once per row written).
+    "stapel-categories>=0.4,<0.9",
     "stapel-attributes>=0.3,<0.6",
     # <0.9, not <0.8: stapel-listings 0.8.0 closes a live anonymous enumeration
     # oracle — the status probe returned owner_id and moderation_status for any

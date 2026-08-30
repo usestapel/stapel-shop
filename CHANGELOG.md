@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.2.8] — 2026-08-31
+
+### The categories cap excluded the release that stops losing rows on a re-sync
+
+`stapel-categories<0.8` is the fifth cap in this composite's history to be the
+wall rather than the guard. **0.8.0 stops keying a catalog re-import on the
+slug**: an imported category's slug is derived from the source catalogue's node
+path, so when the source renames a node the slug moves and the node id does
+not, and a slug-keyed re-import read that as "one category disappeared, an
+unrelated one appeared" — soft-deleting the row that holds the listings and
+creating a duplicate beside it. Matching is now `(external_source,
+external_id)` first, the slug only as a fallback. A composite whose subject is
+an imported marketplace catalog cannot cap a fleet under that.
+
+**0.8.1** is the other half and is a floor for anyone importing at scale rather
+than a nicety: django-treenode rebuilt its denormalized tree columns from a
+`post_save` receiver, once per row written, and `load_catalog` writes every
+record through `save()` by design — so the cost was worse than quadratic. A
+2901-leaf import (3444 categories, 14 409 feature rows) did not finish; 0.8.1
+rebuilds once per load and it takes 185 s.
+
+`>=0.4,<0.9`, so the range still admits everything it did before. Nothing in
+this composite reads a removed field: 0.8.0 is expand-only (one `AddField`,
+one `AddIndex`, migration `0004`) and 0.8.1 changes no surface at all.
+
 ## [0.2.7] — 2026-08-30
 
 ### The attributes cap had no solution at all
