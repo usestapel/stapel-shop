@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.2.10] — 2026-08-31
+
+### Changed
+
+- **`stapel-reviews<0.5` → `<0.6`.** stapel-reviews 0.5.0 is where the module
+  subscribes `user.merged` and re-parents an author's reviews onto the
+  surviving account. `stapel_core.lifecycle.E001` makes that an ERROR rather
+  than a nicety: an app that handles `user.deleted` and says nothing about
+  `user.merged` strands the merged account's rows behind an id that can no
+  longer sign in, and `manage.py check` reports the silence. Every host that
+  mounts this composite therefore has to be able to reach reviews 0.5, and
+  under the old cap it could not: pip answers `ResolutionImpossible` for
+  anything declaring `stapel-reviews>=0.5` beside this line — which is what
+  held stapel-classified 0.5.1, 0.5.2 and 0.5.3 off PyPI, three publish runs
+  in a row. The sixth cap in this composite's history to be the wall rather
+  than the guard.
+
+Nothing here reads reviews' new consumer, so the floor stays at `>=0.2` — the
+range is the whole coupling. 21 passed.
+
 ## [0.2.9] — 2026-08-31
 
 ### Changed

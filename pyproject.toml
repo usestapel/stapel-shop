@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.9"
+version = "0.2.10"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -68,7 +68,16 @@ dependencies = [
     # features on the publish path, ref values carried as codes + labels
     # through the four projections.
     "stapel-listings>=0.4,<0.11",
-    "stapel-reviews>=0.2,<0.5",
+    # <0.6, not <0.5: stapel-reviews 0.5.0 subscribes 'user.merged' and
+    # re-parents an author's reviews to the surviving account. Every app that
+    # handles 'user.deleted' and stays silent on 'user.merged' is an ERROR
+    # (stapel_core.lifecycle.E001), so a host that mounts this composite and
+    # runs `manage.py check` is red under the old cap — and pip answers
+    # ResolutionImpossible for anything that states the >=0.5 floor next to
+    # this line, which is what held stapel-classified 0.5.1..0.5.3 off PyPI.
+    # Nothing here reads reviews' new consumer; the range is the whole
+    # coupling, so the floor stays where it is.
+    "stapel-reviews>=0.2,<0.6",
 ]
 
 [project.urls]
