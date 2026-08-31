@@ -1,6 +1,55 @@
 # Changelog
 
-## [0.2.10] — 2026-08-31
+## [0.2.11] — 2026-08-31
+
+### Changed
+
+- **`stapel-attributes<0.7` → `<0.8`.** 0.7.0 snapshots the chosen options'
+  `label` copy into `SelectDao.labels`, positionally aligned with `value`, so a
+  stored `select` renders as copy rather than as its storage slug without the
+  reader fetching the category config. A live classified deployment was
+  printing slugs at people on listing cards, detail pages and facet chips. The
+  four projections this composite declares are precisely those readers, so
+  capping under 0.7 caps a fleet under the only version that spells this
+  composite's own output correctly — and pip does not warn about it, it answers
+  `ResolutionImpossible` beside stapel-categories 0.8.4. The seventh cap in
+  this composite's history to be the wall rather than the guard.
+
+Nothing here reads the new field — nothing here reads attributes at all — so
+the **floor stays at `>=0.3`**, and that is a measurement rather than an
+inheritance: `grep -rn stapel_attributes *.py` in this repository is empty. The
+package appears only as a dotted path in `preset.py`'s `INSTALLED_APPS`. There
+is no import to break, no DAO built here and no `labels` read here, so the
+range is the whole coupling and the floor states what this composite itself
+needs, which is nothing. A host that wants the label snapshot declares its own
+`>=0.7` and this line gets out of the way.
+
+### Known: this composite is no longer the wall, but the wave is not resolvable yet
+
+Every published `stapel-listings`, 0.10.3 included, declares
+`stapel-attributes>=0.6,<0.7`. Against the workspace with attributes 0.7.0
+installed, the pin gate is down to one failure and it names that member rather
+than a cap here:
+
+    stapel-listings 0.10.2 requires 'stapel-attributes<0.7,>=0.6',
+    but stapel-attributes 0.7.0 is installed
+
+Which is the gate working as its own docstring describes — "unless a git-main
+member has outgrown a cap". Resolved from these specifiers as pip actually
+does, listings holds the fleet at attributes 0.6.2 and the suite is
+**21 passed**: that is the combination this release publishes, and it is green.
+Reaching 0.7.0 needs listings to move its own cap, which is filed for that
+repository rather than worked around here — widening a cap this composite does
+not own would be a lie in metadata, the exact defect every entry above records.
+
+**And the next cap here is already visible.** stapel-listings' working tree is
+mid-release to **0.11.0** with `stapel-attributes>=0.7,<0.8` — the moment that
+publishes, this composite's `stapel-listings>=0.4,<0.11` becomes the wall in
+its turn and needs 0.2.12. It is deliberately NOT widened in this release:
+0.11.0 is unpublished and untested, and a composite whose entire product is a
+combination known to work cannot admit a version no suite has ever run against.
+A cap here states the range this package was built against; pre-widening it
+would make the claim false in the same breath that fixes the other one.
 
 ### Changed
 

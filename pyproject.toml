@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.10"
+version = "0.2.11"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -51,7 +51,26 @@ dependencies = [
     # release that can hold one: held at <0.6, pip answers ResolutionImpossible
     # for anything installing this next to categories 0.8.3, which is the same
     # trap the categories line above records twice.
-    "stapel-attributes>=0.3,<0.7",
+    # <0.8, not <0.7: stapel-attributes 0.7.0 snapshots the chosen options'
+    # `label` copy into SelectDao.labels, index-aligned with `value`, so a
+    # stored `select` renders as copy instead of as its storage slug without
+    # the reader fetching the category config. A live classified deployment
+    # was printing slugs at people on cards, detail pages and facet chips.
+    # The four projections this composite declares are exactly those readers,
+    # so capping under the fix is capping under the only version that spells
+    # this composite's own output correctly — and, as ever, pip does not warn:
+    # it answers ResolutionImpossible next to stapel-categories 0.8.4.
+    #
+    # The FLOOR stays at >=0.3, and for the same reason it has stayed there
+    # through every cap move above: this package reads NOTHING of attributes'
+    # surface. `grep -rn stapel_attributes *.py` is empty — the module appears
+    # only as a dotted path in preset.py's INSTALLED_APPS. There is no import
+    # to break, no DAO built here, no `labels` read here; the range is the
+    # whole coupling, and the floor is a statement about what this composite
+    # itself needs, which is nothing. A host that wants the label snapshot
+    # states its own >=0.7 and this line gets out of the way — which is the
+    # entire job of a floor on a package that touches no surface.
+    "stapel-attributes>=0.3,<0.8",
     # <0.9, not <0.8: stapel-listings 0.8.0 closes a live anonymous enumeration
     # oracle — the status probe returned owner_id and moderation_status for any
     # id, over sequential ids, including other people's drafts and deleted rows.
