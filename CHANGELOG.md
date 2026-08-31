@@ -1,8 +1,13 @@
 # Changelog
 
-## [0.2.13] — 2026-08-31
+## [0.2.14] — 2026-08-31
 
 ### Changed — the cap was the wall in front of a sibling's release
+
+0.2.13 carried the same cap bump and never published: the version moved in
+`pyproject.toml` and `docs/capabilities.json` was left describing 0.2.12, so
+the drift gate refused the release — correctly, since a contract artifact
+that lags the package it describes is exactly what that gate exists to catch.
 
 Patch (pre-1.0 semver: minor = breaking, patch = compatible). No model,
 migration, view or code change: this release admits a sibling and does
