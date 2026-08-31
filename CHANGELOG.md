@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.2.12] — 2026-08-31
+
+### Changed
+
+- **`stapel-listings<0.11` → `<0.12`.** 0.2.11 widened the `stapel-attributes`
+  cap to admit 0.7.0 — the release that snapshots option copy into a stored
+  `select` DAO — and that widening did nothing on its own. stapel-listings
+  0.11.0 declares `stapel-attributes>=0.7,<0.8`, so with listings held under
+  0.11 the two lines have no common solution and pip answers by resolving
+  attributes back to 0.6.2. Not an error, not a warning: a fleet that believed
+  it had the fix, and cards that keep printing `b-u`. The cap was found by a
+  pin-coherence gate one repository over, which is where this class of defect
+  is always found and never by the repository that caused it.
+
+  0.11.0 also carries `listings_reproject_features`, the command that
+  re-derives the four projections from the stored draft and the current
+  category schema. A write-time snapshot has no other way to become true
+  again, and every listing published before attributes 0.7.0 is a stale one.
+
+  Nothing in this package imports `stapel_listings`; the range is the whole
+  coupling, so the floor stays at 0.4.
+
 ## [0.2.11] — 2026-08-31
 
 ### Changed

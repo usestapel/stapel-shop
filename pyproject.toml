@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.11"
+version = "0.2.12"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -86,7 +86,16 @@ dependencies = [
     # attributes-v2 wave above — conditional requiredness and rule-hidden
     # features on the publish path, ref values carried as codes + labels
     # through the four projections.
-    "stapel-listings>=0.4,<0.11",
+    # <0.12, not <0.11: listings 0.11.0 is what the label snapshot above is
+    # FOR. It declares `stapel-attributes>=0.7,<0.8` itself, so held at <0.11
+    # this composite's own attributes line one block up has no solution and
+    # pip resolves the whole fleet back to attributes 0.6.2 — the cap widened
+    # in 0.2.11 doing nothing, silently, which is the failure mode this block
+    # has now recorded five times. 0.11.0 also carries
+    # `listings_reproject_features`: a write-time snapshot has no other way to
+    # become true again, and every listing published before attributes 0.7.0
+    # is stale.
+    "stapel-listings>=0.4,<0.12",
     # <0.6, not <0.5: stapel-reviews 0.5.0 subscribes 'user.merged' and
     # re-parents an author's reviews to the surviving account. Every app that
     # handles 'user.deleted' and stays silent on 'user.merged' is an ERROR
