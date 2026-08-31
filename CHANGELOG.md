@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.2.13] — 2026-08-31
+
+### Changed — the cap was the wall in front of a sibling's release
+
+Patch (pre-1.0 semver: minor = breaking, patch = compatible). No model,
+migration, view or code change: this release admits a sibling and does
+nothing else.
+
+- **`stapel-categories<0.9` → `<0.10`.** 0.9.0 adds the `categories.suggest`
+  comm Function — category NAMES matched for a type-ahead, answered with their
+  full ancestry — which is what lets a classified's search box offer
+  «Одежда › Мужская одежда › Шорты» instead of three identical strings.
+  Nothing of it is consumed here: it is a new Function on a surface this
+  module does not call, and no model, migration or payload moved. Held at
+  `<0.9`, this line is the wall rather than the guard — pip answers
+  `ResolutionImpossible` for anything installing this module beside the
+  release, and a fleet that needs both has no solution at all.
+
 ## [0.2.12] — 2026-08-31
 
 ### Changed

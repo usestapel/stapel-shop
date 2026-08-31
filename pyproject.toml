@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.12"
+version = "0.2.13"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -43,7 +43,13 @@ dependencies = [
     # imported marketplace catalog cannot cap a fleet under the release that
     # stops losing rows on a re-sync. 0.8.1 additionally makes a full-catalog
     # import finish at all (the tree cache was rebuilt once per row written).
-    "stapel-categories>=0.4,<0.9",
+    # <0.10, not <0.9: stapel-categories 0.9.0 adds the `categories.suggest`
+    # comm Function a classified type-ahead needs to offer PLACES rather than
+    # strings, and this cap was the wall in front of it — pip answers
+    # ResolutionImpossible for anything installing this module beside it.
+    # Nothing of 0.9.0 is consumed here: it is a new Function on a surface
+    # this module does not call, and no model, migration or payload moved.
+    "stapel-categories>=0.4,<0.10",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —
