@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.16"
+version = "0.2.17"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -54,7 +54,14 @@ dependencies = [
     # above a fragment buried inside an unrelated word. Same shape as the line
     # above — a response enum on a Function this module never calls — and the
     # cap was again the only thing standing in front of it.
-    "stapel-categories>=0.4,<0.11",
+    # <0.12, not <0.11: stapel-categories 0.11.0 adds `Feature.visibility` —
+    # the column in which the catalogue says that an attribute IDENTIFIES a
+    # specific physical unit (a VIN, an IMEI, a serial number) instead of
+    # describing it, and must therefore never reach an anonymous reader. Same
+    # shape as the two lines above — this module reads nothing of it — but the
+    # cap is again the only thing in front of it, and this one is holding a
+    # fleet under the version that publishes the identifier.
+    "stapel-categories>=0.4,<0.12",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —
@@ -81,7 +88,17 @@ dependencies = [
     # itself needs, which is nothing. A host that wants the label snapshot
     # states its own >=0.7 and this line gets out of the way — which is the
     # entire job of a floor on a package that touches no surface.
-    "stapel-attributes>=0.3,<0.8",
+    # <0.9, not <0.8: stapel-attributes 0.8.0 adds `FeatureDef.visibility` and
+    # stamps it onto every stored value, which is what lets a card, a search
+    # document and a bus payload — none of which has a category schema in hand
+    # — tell that a value must not be published. `public` is the default and
+    # is stamped as nothing at all, so every value already written is
+    # byte-identical under it. Held at <0.8 this composite pins a fleet to the
+    # engine with no axis at all: the catalogue has nowhere to mark the field
+    # and every consumer publishes it, and pip answers ResolutionImpossible
+    # next to categories 0.11.0 rather than warning — the sixth time this
+    # block has recorded that.
+    "stapel-attributes>=0.3,<0.9",
     # <0.9, not <0.8: stapel-listings 0.8.0 closes a live anonymous enumeration
     # oracle — the status probe returned owner_id and moderation_status for any
     # id, over sequential ids, including other people's drafts and deleted rows.
@@ -106,7 +123,19 @@ dependencies = [
     # `listings_reproject_features`: a write-time snapshot has no other way to
     # become true again, and every listing published before attributes 0.7.0
     # is stale.
-    "stapel-listings>=0.4,<0.12",
+    # <0.13, not <0.12: listings 0.12.0 is what the visibility axis above is
+    # FOR, and it closes a live disclosure — an anonymous GET of a listing on
+    # a client stand answered with the car's VIN, and the same string sat in
+    # `features_search` where `?f.vin=<value>` made the index an oracle
+    # confirming which advert that exact vehicle is. It keeps a non-public
+    # value out of the three public projections at write time and redacts
+    # `features` per viewer on the way out. It declares
+    # `stapel-attributes>=0.8.1,<0.9` itself, so held at <0.12 this
+    # composite's own attributes line one block up has no solution and pip
+    # resolves the fleet back to 0.7.1 — the cap widened above doing nothing,
+    # silently, which is the failure mode this block has now recorded six
+    # times.
+    "stapel-listings>=0.4,<0.13",
     # <0.6, not <0.5: stapel-reviews 0.5.0 subscribes 'user.merged' and
     # re-parents an author's reviews to the surviving account. Every app that
     # handles 'user.deleted' and stays silent on 'user.merged' is an ERROR

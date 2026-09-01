@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.2.17] — 2026-09-02
+
+Patch. Caps only — no code, no model, no migration, no payload.
+
+- `stapel-attributes<0.8` -> `<0.9`
+- `stapel-categories<0.11` -> `<0.12`
+- `stapel-listings<0.12` -> `<0.13`
+
+The three move TOGETHER because each alone is a no-change: the axis is
+declared in one, set in the second and enforced in the third, and any two of
+them without the last resolves to a fleet that still publishes the value.
+
+What they are in front of: an anonymous GET of a listing on a live classified
+stand answered with the car's **VIN**, and the same string sat in
+`features_search`, where `?f.vin=<value>` made the search index an oracle —
+it would confirm that this exact advert is that exact vehicle. A VIN and an
+IMEI identify a *specific physical unit* rather than describing it, so
+publishing one lets a stranger act as its owner. stapel-attributes 0.8.0 adds
+`FeatureDef.visibility` and stamps it onto every stored value (so a card, a
+search document and a bus payload can tell without a schema in hand),
+stapel-categories 0.11.0 adds the column the catalogue sets it in, and
+stapel-listings 0.12.0 stops handing the value to a reader without the
+entitlement.
+
+This module reads none of it — `grep -rn stapel_attributes *.py` is still
+empty and these three appear only as dotted paths in `preset.py` — which is
+exactly why the caps are the whole coupling and why a stale one is invisible
+until pip answers ResolutionImpossible instead of warning. The floors do not
+move, for the reason this file has now given several times: a floor on a
+package this composite does not touch is a statement about what it needs,
+which is nothing.
+
 ## [0.2.16] — 2026-09-02
 
 Patch. Cap only — no code, no model, no migration, no payload.
