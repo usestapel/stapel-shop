@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.14"
+version = "0.2.15"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -53,7 +53,7 @@ dependencies = [
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —
-    # where 2 468 Avito fields ARE composites — cannot cap a fleet under the
+    # where 2 468 imported fields ARE composites — cannot cap a fleet under the
     # release that can hold one: held at <0.6, pip answers ResolutionImpossible
     # for anything installing this next to categories 0.8.3, which is the same
     # trap the categories line above records twice.

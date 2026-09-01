@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.15] — 2026-09-01
+
+Patch. One dependency comment — no code, dependency range or API change.
+
+The comment explaining why the `stapel-attributes` cap moved named the
+external marketplace whose catalogue was imported. It now says what the
+argument rests on: an imported external catalogue, 2 468 of whose fields are
+composites.
+
 ## [0.2.14] — 2026-08-31
 
 ### Changed — the cap was the wall in front of a sibling's release
