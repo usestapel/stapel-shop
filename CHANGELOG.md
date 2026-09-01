@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.16] — 2026-09-02
+
+Patch. Cap only — no code, no model, no migration, no payload.
+
+`stapel-categories<0.10` -> `<0.11`. 0.10.0 grades a `categories.suggest`
+match four ways where it graded it two, so the caller that ranks a type-ahead
+can put an exact catalogue name above a fragment buried inside an unrelated
+word. This module calls no part of that Function; the cap was simply the wall
+in front of it, exactly as it was in 0.2.14 — held here, pip answers
+ResolutionImpossible for anything installing this module beside categories
+0.10.
+
 ## [0.2.15] — 2026-09-01
 
 Patch. One dependency comment — no code, dependency range or API change.

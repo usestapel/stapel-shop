@@ -24,7 +24,7 @@ pip install stapel-shop
 
 | Fact | Value |
 |---|---|
-| Version | `0.2.15` |
+| Version | `0.2.16` |
 | Python | `>=3.11` (3.11, 3.12, 3.13, 3.14) |
 | Fleet dependencies | [`stapel-attributes`](https://github.com/usestapel/stapel-attributes) · [`stapel-categories`](https://github.com/usestapel/stapel-categories) · [`stapel-listings`](https://github.com/usestapel/stapel-listings) · [`stapel-reviews`](https://github.com/usestapel/stapel-reviews) |
 
