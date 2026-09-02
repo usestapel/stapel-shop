@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.21] — 2026-09-02
+
+Patch. One cap — no code, no model, no migration, no payload.
+
+- `stapel-listings<0.15` -> `<0.16`
+
+**stapel-listings 0.15.0** is breaking twice over, and neither break reaches
+this module: `price` is nullable (an unstated price is NULL, never a public
+"0 ₽" on a card), and the index-boundary detector moved into
+`Listing.save()`, so a status write that skipped the state machine can no
+longer leave a de-listed listing in a search index. A reader of
+`Listing.price` has to look at both; this module holds one review-summary
+projection keyed by listing id and reads no listing field at all. So the cap
+was again the only wall — and a fleet held behind it keeps serving ghost
+cards and free phones.
+
 ## [0.2.20] — 2026-09-02
 
 Patch. Caps only — no code, no model, no migration, no payload.

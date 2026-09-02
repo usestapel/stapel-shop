@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.20"
+version = "0.2.21"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -157,7 +157,15 @@ dependencies = [
     # a listing's photos so stapel-cdn's orphan sweeper can tell a live photo
     # from an abandoned upload. This module reads nothing of it; the cap was
     # again the only wall.
-    "stapel-listings>=0.4,<0.15",
+    # <0.16, not <0.15: stapel-listings 0.15.0 makes `price` nullable (an
+    # unstated price is NULL, never a public «0 ₽») and moves the index-
+    # boundary detector into `Listing.save()`, so a raw status write can no
+    # longer leave a de-listed listing in a search index. Both are breaking
+    # for a reader of `Listing.price`; this module has no such reader — it
+    # holds one review-summary projection keyed by listing id and touches no
+    # listing field at all — so once more the cap was the only wall, and a
+    # fleet held here keeps serving ghost cards.
+    "stapel-listings>=0.4,<0.16",
     # <0.6, not <0.5: stapel-reviews 0.5.0 subscribes 'user.merged' and
     # re-parents an author's reviews to the surviving account. Every app that
     # handles 'user.deleted' and stays silent on 'user.merged' is an ERROR
