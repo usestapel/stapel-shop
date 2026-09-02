@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.22"
+version = "0.2.23"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -171,7 +171,14 @@ dependencies = [
     # holds one review-summary projection keyed by listing id and touches no
     # listing field at all — so once more the cap was the only wall, and a
     # fleet held here keeps serving ghost cards.
-    "stapel-listings>=0.4,<0.16",
+    # <0.18, not <0.16: stapel-listings 0.16 requires a location to publish
+    # and derives the published location_label from the pin, and 0.17 adds
+    # the batched engagement overlay. None of the three touch a surface this
+    # module reads — shop consumes listings through `listings.status` and the
+    # card projection, both unchanged — so the cap moves rather than the
+    # floor. Held at <0.16 it pins every fleet installing shop to a listings
+    # that publishes placeless rows.
+    "stapel-listings>=0.4,<0.18",
     # <0.6, not <0.5: stapel-reviews 0.5.0 subscribes 'user.merged' and
     # re-parents an author's reviews to the surviving account. Every app that
     # handles 'user.deleted' and stays silent on 'user.merged' is an ERROR

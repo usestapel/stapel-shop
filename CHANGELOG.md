@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.23] — 2026-09-03
+
+### Changed
+
+- `stapel-listings` cap `<0.16` -> `<0.18`. Range only: 0.16 requires a
+  location to publish and derives the published `location_label` from the
+  pin, 0.17 adds the batched engagement overlay, and none of the three
+  touches a surface this module reads. Held where it was, the cap pinned
+  every fleet that installs shop to a listings that publishes placeless rows.
+
 ## [0.2.22] — 2026-09-03
 
 Patch. One cap — no code, no model, no migration, no payload.
