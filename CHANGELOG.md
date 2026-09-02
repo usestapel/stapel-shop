@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.2.20] — 2026-09-02
+
+Patch. Caps only — no code, no model, no migration, no payload.
+
+- `stapel-categories<0.14` -> `<0.15`
+- `stapel-listings<0.14` -> `<0.15`
+
+This module reads neither of the things behind them; the cap is again the
+only wall in front of a fleet that does. **stapel-categories 0.14.0** adds
+the `categories.children` comm Function — the rung-by-rung tree read an LLM
+walks a category guess with, the way a person walks the cascade.
+**stapel-listings 0.14.0** claims CDN media references for a listing's
+photos, so stapel-cdn's orphan sweeper can tell a live photo from an
+abandoned upload.
+
 ## [0.2.19] — 2026-09-02
 
 Dependency-range patch, no code. `stapel-categories<0.13` -> `<0.14`: the cap

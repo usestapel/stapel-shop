@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.19"
+version = "0.2.20"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -68,7 +68,12 @@ dependencies = [
     # this module reads neither, and the cap is again the only thing standing
     # in front of a fleet that needs them — there, the two endpoints are what
     # takes a cold catalogue page off a 15-page, 614 KB client-side walk.
-    "stapel-categories>=0.4,<0.14",
+    # <0.15, not <0.14: stapel-categories 0.14.0 adds the `categories.children`
+    # comm Function — the rung-by-rung tree read an LLM walks a category guess
+    # with the way a person walks the cascade. Same shape as the lines above:
+    # this module reads nothing of it, and the cap was the only wall in front
+    # of the fleet that consumes it.
+    "stapel-categories>=0.4,<0.15",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —
@@ -148,7 +153,11 @@ dependencies = [
     # deps-only widening for this module, which does not run that command —
     # but the fleet whose catalogue it holds does, and held at <0.13 the cap
     # is what keeps 12 measured listings on a stale projection.
-    "stapel-listings>=0.4,<0.14",
+    # <0.15, not <0.14: stapel-listings 0.14.0 claims CDN media references for
+    # a listing's photos so stapel-cdn's orphan sweeper can tell a live photo
+    # from an abandoned upload. This module reads nothing of it; the cap was
+    # again the only wall.
+    "stapel-listings>=0.4,<0.15",
     # <0.6, not <0.5: stapel-reviews 0.5.0 subscribes 'user.merged' and
     # re-parents an author's reviews to the surviving account. Every app that
     # handles 'user.deleted' and stays silent on 'user.merged' is an ERROR
