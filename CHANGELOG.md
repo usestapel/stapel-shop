@@ -1,6 +1,14 @@
 # Changelog
 
-## [0.2.23] — 2026-09-03
+## [0.2.24] — 2026-09-03
+
+### Fixed
+
+- Re-cut of 0.2.23, whose tag was pushed before the regenerated
+  version-stamped artifacts and failed its own drift gate on the way to
+  PyPI. Same range change, nothing else. Pin 0.2.24.
+
+## [0.2.23] — 2026-09-03 (never published)
 
 ### Changed
 
