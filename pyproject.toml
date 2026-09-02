@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.18"
+version = "0.2.19"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -68,7 +68,7 @@ dependencies = [
     # this module reads neither, and the cap is again the only thing standing
     # in front of a fleet that needs them — there, the two endpoints are what
     # takes a cold catalogue page off a 15-page, 614 KB client-side walk.
-    "stapel-categories>=0.4,<0.13",
+    "stapel-categories>=0.4,<0.14",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —

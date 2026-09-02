@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.19] — 2026-09-02
+
+Dependency-range patch, no code. `stapel-categories<0.13` -> `<0.14`: the cap
+sat in front of a member of the classified composite the day categories
+0.13.0 shipped (the release that takes source-catalogue provenance off the
+public read surface), turning a fleet's security bump into
+ResolutionImpossible. Verified against 0.13.0: this package's suite passes
+unmodified — it consumes the tree and the feature schema, neither of which
+moved.
+
 ## [0.2.18] — 2026-09-02
 
 Patch. Caps only — no code, no model, no migration, no payload.
