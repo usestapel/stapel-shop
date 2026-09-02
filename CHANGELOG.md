@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.2.18] — 2026-09-02
+
+Patch. Caps only — no code, no model, no migration, no payload.
+
+- `stapel-categories<0.12` -> `<0.13`
+- `stapel-listings<0.13` -> `<0.14`
+
+This module reads neither of the things behind them. The cap is, again, the
+only thing standing in front of a fleet that does — the failure shape this
+block has now recorded seven times.
+
+**stapel-categories 0.12.0** adds the two public tree reads a storefront
+walks a catalogue with: `roots` (top-level categories without pulling the
+whole table) and `by-slug/<slug>` (the storefront's own URL vocabulary
+resolved server-side). Until they existed, a client that wanted either had
+one way to ask — list everything and filter locally, measured on a live stand
+as a 15-page, 614 KB walk behind a cold catalogue page.
+
+**stapel-listings 0.13.0** makes `listings_reproject_features` repair a
+listing field by field instead of skipping the whole row over one attribute
+that no longer validates. Held at `<0.13`, this cap is what keeps 12 measured
+listings on a stale projection, printing storage slugs where display copy
+belongs.
+
 ## [0.2.17] — 2026-09-02
 
 Patch. Caps only — no code, no model, no migration, no payload.
