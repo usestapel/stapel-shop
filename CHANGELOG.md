@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.22] — 2026-09-03
+
+Patch. One cap — no code, no model, no migration, no payload.
+
+- `stapel-categories<0.15` -> `<0.16`
+
+**stapel-categories 0.15.0** makes `active` stand-owned curation: a
+catalogue re-import writes it only on create, so it can no longer resurrect
+a category an operator retired in the admin — the same failure the
+presentation keys were pulled out for in 0.13.0, one field over. It also
+adds the resurrection half of the `catalog_health` gate (an active category
+under an inactive parent: reachable by search or a saved link while the path
+to it is closed). Breaking for a `.sync-state.json` sidecar
+(`STATE_VERSION` 3 -> 4) and for anyone who expected a fixture's `active` to
+win on update; this module runs no catalogue load and holds no sidecar.
+
 ## [0.2.21] — 2026-09-02
 
 Patch. One cap — no code, no model, no migration, no payload.

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.21"
+version = "0.2.22"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -73,7 +73,13 @@ dependencies = [
     # with the way a person walks the cascade. Same shape as the lines above:
     # this module reads nothing of it, and the cap was the only wall in front
     # of the fleet that consumes it.
-    "stapel-categories>=0.4,<0.15",
+    # <0.16, not <0.15: stapel-categories 0.15.0 makes `active` stand-owned
+    # curation — a catalogue re-import can no longer resurrect a category an
+    # operator retired — and adds the resurrection half of `catalog_health`.
+    # Breaking for a sidecar (STATE_VERSION 3 -> 4) and for anyone who
+    # expected a fixture's `active` to win on update; this module runs no
+    # catalogue load and holds no sidecar, so once more the cap is the wall.
+    "stapel-categories>=0.4,<0.16",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —
