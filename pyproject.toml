@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.28"
+version = "0.2.29"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -91,7 +91,13 @@ dependencies = [
     # instead of a 500. Fixture-format and comm-provider changes; shop runs no
     # catalogue load, holds no sidecar and reads the tree through the comm
     # Functions, so once more the cap is the only wall.
-    "stapel-categories>=0.4,<0.18",
+    # <0.19, not <0.18: stapel-categories 0.18.0 makes `fixture-wins` cover a
+    # db-only EDIT (it already covered a db-only deletion), so a catalogue load
+    # converges instead of stranding a retyped root for ever, and makes the
+    # plan report the overrides the load will refuse. Loader behaviour only —
+    # this module runs no catalogue load and reads none of it; the cap was
+    # again the only thing standing in front of it.
+    "stapel-categories>=0.4,<0.19",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —
