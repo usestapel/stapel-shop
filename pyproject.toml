@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.26"
+version = "0.2.27"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -84,7 +84,14 @@ dependencies = [
     # acceptance-run fixture to anonymous callers) and keeps the full set for
     # a service/staff sync principal. Range only for this module — shop reads
     # the tree through the comm Functions, which 0.16.0 does not touch.
-    "stapel-categories>=0.4,<0.17",
+    # <0.18, not <0.17: categories 0.17.0 lets a per-category feature OVERRIDE
+    # carry its own display `name` (both halves of the fixture round trip used
+    # to drop it, so every override rendered the ROOT's label), and turns a
+    # malformed category id into the LookupError the docstrings promise
+    # instead of a 500. Fixture-format and comm-provider changes; shop runs no
+    # catalogue load, holds no sidecar and reads the tree through the comm
+    # Functions, so once more the cap is the only wall.
+    "stapel-categories>=0.4,<0.18",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —
@@ -188,7 +195,16 @@ dependencies = [
     # card projection, both unchanged — so the cap moves rather than the
     # floor. Held at <0.16 it pins every fleet installing shop to a listings
     # that publishes placeless rows.
-    "stapel-listings>=0.4,<0.18",
+    # <0.20, not <0.18: listings 0.18/0.19 land in one release — the
+    # re-projection can BUILD a missing projection (it was keyed on its own
+    # output, so a listing with a draft and no projection was never examined,
+    # and a live fleet had 12 published rows showing an empty characteristics
+    # table), and `Listing.category_id` gained a model-field validator so it
+    # can hold an id and not a search PATH. Neither touches a surface this
+    # module reads — shop consumes listings through `listings.status` and the
+    # card projection — and held at <0.18 this cap is what keeps a fleet from
+    # installing the fix for a defect it is already suffering.
+    "stapel-listings>=0.4,<0.20",
     # <0.6, not <0.5: stapel-reviews 0.5.0 subscribes 'user.merged' and
     # re-parents an author's reviews to the surviving account. Every app that
     # handles 'user.deleted' and stays silent on 'user.merged' is an ERROR

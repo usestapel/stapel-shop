@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.2.27] — 2026-09-03
+
+Patch. Caps only: `stapel-categories` admits 0.17, `stapel-listings` admits
+0.18/0.19.
+
+stapel-categories 0.17.0 lets a per-category feature OVERRIDE carry its own
+display `name` — both halves of the fixture round trip used to drop it, so
+every override rendered the ROOT's label — and turns a malformed category id
+into the `LookupError` its docstrings promise instead of a 500.
+
+stapel-listings 0.18/0.19 land in one release: `listings_reproject_features`
+can BUILD a missing projection (it was keyed on its own output, so a listing
+carrying a draft and no projection was never even examined, and a live fleet
+had 12 published rows showing an empty characteristics table), and
+`Listing.category_id` gained a model-field validator so it can hold an id and
+not a search path.
+
+None of it touches a surface this module reads: shop runs no catalogue load,
+holds no sidecar, reads the tree through the comm Functions, and consumes
+listings through `listings.status` and the card projection. The suite is green
+against both with no edit — so this is a cap-only patch, and holding it is what
+would keep a fleet from installing the fix for a defect it is already
+suffering.
+
 ## [0.2.26] — 2026-09-03
 
 Patch. Cap only: `stapel-attributes` admits 0.9.
