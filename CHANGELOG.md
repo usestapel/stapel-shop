@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.2.26] — 2026-09-03
+
+Patch. Cap only: `stapel-attributes` admits 0.9.
+
+stapel-attributes 0.9.0 changes one rule semantic — a VALUE predicate (`in` /
+`not_in`) no longer matches a controller that reads EMPTY, so a
+`require when X not_in […]` rule stops firing before anyone has answered `X`.
+Two UX walkers had hit that wall on an imported catalogue: a field starred and
+refusing "Next" while its own help line said it was needed only *if* another
+field said so, with that field untouched.
+
+The cap moves so a fleet can install one attributes version. `tests/
+test_pin_coherence.py` is the only file in this module that reads the line —
+it checks the declared range against what is actually installed — and it is
+the test that went red the moment 0.9.0 landed in the venv. Green again, with
+no other edit.
+
 ## [0.2.25] — 2026-09-03
 
 ### Changed
