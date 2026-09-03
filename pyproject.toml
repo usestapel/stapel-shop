@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.27"
+version = "0.2.28"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -204,7 +204,17 @@ dependencies = [
     # module reads — shop consumes listings through `listings.status` and the
     # card projection — and held at <0.18 this cap is what keeps a fleet from
     # installing the fix for a defect it is already suffering.
-    "stapel-listings>=0.4,<0.20",
+    # <0.21, not <0.20: stapel-listings 0.20 gives a seller a way out of every
+    # status the cabinet can put a listing into (`OWNER_TRANSITIONS` plus one
+    # transition route — before it, ARCHIVED/PAUSED/EXPIRED/SOLD/REJECTED
+    # offered the owner nothing but DELETE), and renames the never-submitted
+    # `moderation_status` default from `pending` to `not_submitted`. This
+    # module reads neither: shop consumes listings through `listings.status`
+    # and the card projection, and it has never read `moderation_status` at
+    # all. So the cap moves and the floor does not — and held at <0.20 it is
+    # what stops a fleet installing the fix for a defect its sellers are
+    # reporting.
+    "stapel-listings>=0.4,<0.21",
     # <0.6, not <0.5: stapel-reviews 0.5.0 subscribes 'user.merged' and
     # re-parents an author's reviews to the surviving account. Every app that
     # handles 'user.deleted' and stays silent on 'user.merged' is an ERROR

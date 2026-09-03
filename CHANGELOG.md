@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.2.28] — 2026-09-03
+
+Patch. Cap only: `stapel-listings` admits 0.20.
+
+stapel-listings 0.20.0 gives a seller a way out of every status the cabinet
+can put a listing into. Before it the owner API exposed two lifecycle edges,
+`archive` and `complete`, and both are exits — so ARCHIVED, PAUSED, EXPIRED,
+SOLD, REJECTED and BLOCKED were one-way doors and `DELETE` was the only call
+left that answered. It also renames the never-submitted `moderation_status`
+default from `pending` to `not_submitted`, so a draft nobody has submitted
+stops claiming to be under review.
+
+This module reads neither surface — shop consumes listings through
+`listings.status` and the card projection, and has never read
+`moderation_status` — so the cap moves and the floor stays where it is. Held
+at <0.20 it is what stops a fleet installing the fix for a defect its own
+sellers are reporting.
+
 ## [0.2.27] — 2026-09-03
 
 Patch. Caps only: `stapel-categories` admits 0.17, `stapel-listings` admits
