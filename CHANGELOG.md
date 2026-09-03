@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.30] — 2026-09-03
+
+Patch. Cap only: `stapel-listings` admits 0.21.
+
+stapel-listings 0.21.0 stops the public listing card and detail read handing an
+anonymous reader the seller's exact point — `geohash` at precision 8 (~38m x
+19m) beside `lat`/`lon` at six decimal places (~11cm), which for a private
+person selling from home is their address next to their phone number. The
+payload now carries the neighbourhood (~1.1km) plus `geo_precision_km`, and the
+owner, staff and the service transport keep the exact pin. This module has no
+coordinate column of its own and reads neither `lat`, `lon` nor `geohash` off
+the card, so the change is inert here — the cap was the only thing standing in
+front of a privacy fix that is live on a stand.
+
 ## [0.2.29] — 2026-09-03
 
 Patch. Cap only: `stapel-categories` admits 0.18.

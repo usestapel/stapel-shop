@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.29"
+version = "0.2.30"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -220,7 +220,14 @@ dependencies = [
     # all. So the cap moves and the floor does not — and held at <0.20 it is
     # what stops a fleet installing the fix for a defect its sellers are
     # reporting.
-    "stapel-listings>=0.4,<0.21",
+    # <0.22, not <0.21: stapel-listings 0.21.0 stops the public listing card
+    # publishing the seller's exact point (geohash precision 8 + six-decimal
+    # lat/lon) to anonymous readers, coarsening it to ~1.1km and adding
+    # `geo_precision_km`. Shop has no coordinate column of its own and reads
+    # neither `lat`, `lon` nor `geohash` off the card, so the change is inert
+    # here — and held at <0.21 this cap is what stops a fleet installing a
+    # privacy fix that is live on a stand.
+    "stapel-listings>=0.4,<0.22",
     # <0.6, not <0.5: stapel-reviews 0.5.0 subscribes 'user.merged' and
     # re-parents an author's reviews to the surviving account. Every app that
     # handles 'user.deleted' and stays silent on 'user.merged' is an ERROR
