@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.30"
+version = "0.2.31"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -97,7 +97,18 @@ dependencies = [
     # plan report the overrides the load will refuse. Loader behaviour only —
     # this module runs no catalogue load and reads none of it; the cap was
     # again the only thing standing in front of it.
-    "stapel-categories>=0.4,<0.19",
+    # <0.20, not <0.19: stapel-categories 0.19.0 gives every node a
+    # `children_as` — whether its children are real subcategories (a tile grid
+    # of destinations) or a partition of ONE attribute template that belongs
+    # on a chip row over the parent's own feed — plus the derivation command
+    # that answers it and `GET /categories/api/v1/tree/`, the whole visible
+    # catalogue nested in one cached call. Additive: two new columns with
+    # defaults, one new key on the public category payload, one new endpoint.
+    # This module reads none of it — shop reaches the tree through the comm
+    # Functions, and none of those changed — so once more the cap is the only
+    # thing standing in front of a fleet that needs the storefront's
+    # mega-menu and its chip pages.
+    "stapel-categories>=0.4,<0.20",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —
