@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.24"
+version = "0.2.25"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -79,7 +79,12 @@ dependencies = [
     # Breaking for a sidecar (STATE_VERSION 3 -> 4) and for anyone who
     # expected a fixture's `active` to win on update; this module runs no
     # catalogue load and holds no sidecar, so once more the cap is the wall.
-    "stapel-categories>=0.4,<0.16",
+    # <0.17, not <0.16: categories 0.16.0 stops serving retired dead-end
+    # rows on the PUBLIC reads (a stand's flat list was handing every
+    # acceptance-run fixture to anonymous callers) and keeps the full set for
+    # a service/staff sync principal. Range only for this module — shop reads
+    # the tree through the comm Functions, which 0.16.0 does not touch.
+    "stapel-categories>=0.4,<0.17",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —

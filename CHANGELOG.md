@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.25] — 2026-09-03
+
+### Changed
+
+- `stapel-categories` cap `<0.16` -> `<0.17`. Range only: 0.16.0 changes the
+  public HTTP reads (retired dead-end rows leave the catalogue; a service or
+  staff sync principal still gets the full set) and touches none of the comm
+  Functions this module reads the tree through.
+
 ## [0.2.24] — 2026-09-03
 
 ### Fixed
