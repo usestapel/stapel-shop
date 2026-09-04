@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.2.32] — 2026-09-04
+
+Patch. Cap only: `stapel-categories` admits 0.20.
+
+stapel-categories 0.20.0 provides `categories.by_slug` — root->leaf ancestry
+for a node named by SLUG, the comm Function stapel-search declared for
+resolving a `category=avtomobili` segment and which nothing in the fleet
+answered until this release. It also gives a node whose children are drawn as
+a chip row a `children_axis_label`: the name of the axis they split on, an
+optional translation key that rides on the public category payload and the
+tree endpoint. Additive throughout — a new Function, one new column with a
+blank default, one new key.
+
+This module reads none of it. Shop reaches the category tree through
+`categories.path` and `categories.features`, neither of which changed, and the
+slug lookup is the search module's own caller-side business — the cap was the
+only thing standing in front of a fleet that wants slug addresses in its
+storefront URLs.
+
 ## [0.2.31] — 2026-09-04
 
 Patch. Cap only: `stapel-categories` admits 0.19.

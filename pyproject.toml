@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.31"
+version = "0.2.32"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -108,7 +108,18 @@ dependencies = [
     # Functions, and none of those changed — so once more the cap is the only
     # thing standing in front of a fleet that needs the storefront's
     # mega-menu and its chip pages.
-    "stapel-categories>=0.4,<0.20",
+    # <0.21, not <0.20: stapel-categories 0.20.0 provides
+    # `categories.by_slug` — the ancestry of a node named by SLUG, the
+    # Function stapel-search declared for resolving a `category=avtomobili`
+    # segment and nobody answered until now — and gives a chips parent a
+    # `children_axis_label`, the name of the axis its children split on. New
+    # Function, one new nullable column, one new key on the public category
+    # payload; nothing existing changed shape. This module reads neither: it
+    # reaches the tree through `categories.path`/`categories.features`, and
+    # the slug lookup is stapel-search's caller-side business. The cap was
+    # once more the only thing in front of a fleet that wants slug addresses
+    # in its storefront URLs.
+    "stapel-categories>=0.4,<0.21",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —
