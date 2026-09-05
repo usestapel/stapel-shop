@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.2.34] — 2026-09-05
+
+Patch. Cap only: `stapel-listings` admits 0.22, `stapel-categories` admits
+0.21.
+
+stapel-listings 0.22.0 adds the comm Function `listings.rename_feature_keys`
+(the write half of a category feature-slug rename), a management command
+that calls it, and the new setting `CATEGORY_CHILDREN_FUNCTION` it resolves
+subtrees through. This module calls neither the Function nor the command and
+sets neither setting — shop's listings surface stays `listings.status` and
+the card projection, unchanged.
+
+stapel-categories 0.21.0 makes `load_catalog` detect and block a feature
+rename inside a catalogue reload by default, with `--rename-features` to
+perform it (handing the other half to a hook named by the new
+`FEATURE_RENAME_HOOK` setting) and `--no-hook` to apply one with nothing to
+move. This module runs no catalogue load and holds no fixture of its own —
+shop reaches the tree through the comm Functions, none of which moved.
+
+Both caps were the only wall.
+
 ## [0.2.33] — 2026-09-05
 
 Patch. Cap only: `stapel-reviews` admits 0.6.

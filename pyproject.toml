@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.33"
+version = "0.2.34"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -119,7 +119,14 @@ dependencies = [
     # the slug lookup is stapel-search's caller-side business. The cap was
     # once more the only thing in front of a fleet that wants slug addresses
     # in its storefront URLs.
-    "stapel-categories>=0.4,<0.21",
+    # <0.22, not <0.21: stapel-categories 0.21.0 makes `load_catalog` detect
+    # and block a feature rename inside a catalogue reload (`--rename-features`
+    # to accept one on purpose, `--no-hook` plus `FEATURE_RENAME_HOOK` for a
+    # host to wire its own migration instead of the built-in refusal). This
+    # module runs no catalogue load and holds no fixture of its own — shop
+    # reaches the tree through the comm Functions, none of which moved — so
+    # the cap was again the only wall.
+    "stapel-categories>=0.4,<0.22",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —
@@ -249,7 +256,15 @@ dependencies = [
     # neither `lat`, `lon` nor `geohash` off the card, so the change is inert
     # here — and held at <0.21 this cap is what stops a fleet installing a
     # privacy fix that is live on a stand.
-    "stapel-listings>=0.4,<0.22",
+    # <0.23, not <0.22: stapel-listings 0.22.0 adds the comm Function
+    # `listings.rename_feature_keys` (a listing-side handler for a category's
+    # feature rename), a management command that calls it, and the setting
+    # `CATEGORY_CHILDREN_FUNCTION`. All three exist so stapel-categories'
+    # rename tooling has a listings-side counterpart to invoke; this module
+    # calls neither the Function nor the command and sets neither setting —
+    # shop's listings surface stays `listings.status` and the card projection,
+    # unchanged — so the cap was the only wall.
+    "stapel-listings>=0.4,<0.23",
     # <0.6, not <0.5: stapel-reviews 0.5.0 subscribes 'user.merged' and
     # re-parents an author's reviews to the surviving account. Every app that
     # handles 'user.deleted' and stays silent on 'user.merged' is an ERROR
