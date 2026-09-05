@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.2.33] — 2026-09-05
+
+Patch. Cap only: `stapel-reviews` admits 0.6.
+
+stapel-reviews 0.6.0 adds an optional denormalised `owner_key` column on
+reviews (for querying a merchant's reviews across their listings without a
+join), a new per-owner batch aggregate Function and endpoint built on that
+column, and a management command to backfill it on existing rows. Existing
+endpoints are unchanged.
+
+This module reads none of it. `ListingReviewSummaryProjection`
+(`projections.py`) consumes only the existing per-listing surface —
+`reviews.aggregates_by_keys` (live_query), `reviews.aggregates_export`
+(source_of_truth), and the `{avg, count}` aggregate carried on
+`reviews.review.published`/`.hidden` — none of which changed shape in 0.6.0.
+The cap was the only wall.
+
 ## [0.2.32] — 2026-09-04
 
 Patch. Cap only: `stapel-categories` admits 0.20.

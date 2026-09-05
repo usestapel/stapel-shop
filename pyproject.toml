@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.32"
+version = "0.2.33"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -259,7 +259,16 @@ dependencies = [
     # this line, which is what held stapel-classified 0.5.1..0.5.3 off PyPI.
     # Nothing here reads reviews' new consumer; the range is the whole
     # coupling, so the floor stays where it is.
-    "stapel-reviews>=0.2,<0.6",
+    # <0.7, not <0.6: stapel-reviews 0.6.0 adds an optional denormalised
+    # `owner_key` column on reviews, a new per-owner batch aggregate
+    # Function/endpoint, and a backfill command for the column. This module
+    # reads none of it — `ListingReviewSummaryProjection`
+    # (projections.py) consumes only the existing per-listing
+    # `reviews.aggregates_by_keys` live_query, `reviews.aggregates_export`
+    # source_of_truth, and the `{avg, count}` aggregate carried on
+    # `reviews.review.published`/`.hidden`, none of which changed shape. The
+    # cap was the only wall.
+    "stapel-reviews>=0.2,<0.7",
 ]
 
 [project.urls]
