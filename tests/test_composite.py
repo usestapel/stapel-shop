@@ -95,16 +95,18 @@ def test_refusal_envelope_is_wired_in_this_harness():
     seam is asserted directly instead — core's system check reads
     ``rest_framework.settings.api_settings``, i.e. what DRF will actually
     call, so an absent ``EXCEPTION_HANDLER`` key reads here as DRF's own
-    handler and the check reports it. Before this harness carried the key,
-    this failed with stapel_core.error_envelope.W001.
+    handler — which is what core's stapel_core.error_envelope.W001 reports.
+    Before this harness carried the key, this failed.
     """
-    from stapel_core.django.exception_handler_checks import (
-        W001_HANDLER_BYPASSED,
-        check_exception_handler_wired,
-        effective_handler,
-        reaches_core_handler,
-    )
+    from rest_framework.settings import api_settings
 
-    assert [m.id for m in check_exception_handler_wired()] == []
-    assert W001_HANDLER_BYPASSED  # the id this guards against
-    assert reaches_core_handler(effective_handler())
+    from stapel_core.django.api.errors import stapel_exception_handler
+
+    # ``api_settings`` is the authority on purpose, and the same one core's
+    # check reads: it layers this deployment's REST_FRAMEWORK over DRF's
+    # defaults and performs the import, so an absent key reads here as
+    # ``rest_framework.views.exception_handler`` — which is the degradation.
+    # Asserted by identity rather than through
+    # ``stapel_core.django.exception_handler_checks`` (core 0.61.1) so the
+    # test runs on this package's declared stapel-core floor.
+    assert api_settings.EXCEPTION_HANDLER is stapel_exception_handler
