@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.34"
+version = "0.2.35"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -126,7 +126,14 @@ dependencies = [
     # module runs no catalogue load and holds no fixture of its own — shop
     # reaches the tree through the comm Functions, none of which moved — so
     # the cap was again the only wall.
-    "stapel-categories>=0.4,<0.22",
+    # <0.23, not <0.22: cap-only. stapel-categories 0.22.0 adds
+    # `children_axis_tag` and `children_expand_by` to a chips parent, and a
+    # new `CategoryLink` node kind (`children` becomes a `oneOf` of real /
+    # linked / virtual). This module reaches the tree only through the comm
+    # Functions (`categories.path`/`.features`); it reads no `children`
+    # payload and holds no tree endpoint of its own, so the new
+    # discriminator is invisible here. The cap was the only wall.
+    "stapel-categories>=0.4,<0.23",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —

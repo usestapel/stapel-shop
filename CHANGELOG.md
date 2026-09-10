@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.35] — 2026-09-10
+
+cap-only: stapel-categories <0.23 (0.22.0 adds `children_axis_tag`,
+`children_expand_by`, `CategoryLink`; wire additive)
+
 ## [0.2.34] — 2026-09-05
 
 Patch. Cap only: `stapel-listings` admits 0.22, `stapel-categories` admits
