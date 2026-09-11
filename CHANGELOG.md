@@ -43,6 +43,16 @@ stapel-reviews 0.7.0): 33 passed.
 cap-only: stapel-categories <0.23 (0.22.0 adds `children_axis_tag`,
 `children_expand_by`, `CategoryLink`; wire additive)
 
+Hardened the same day, after the leg's first green run: it had installed
+stapel-reviews 0.6.1 while 0.7.0 was on the index and inside the declared
+range — pip backtracked around stapel-shop 0.2.35's `<0.7` and exited 0, so
+the job reported success without testing the release it names. The leg now
+runs `.github/newest_siblings.py`, which asks the index per package with
+`--no-deps` what the newest version in range is, compares it against what is
+installed, and on a mismatch names the installed distribution whose own
+requirement excluded it. A silent substitution is now a red job. (CI only —
+not part of the published wheel.)
+
 ## [0.2.34] — 2026-09-05
 
 Patch. Cap only: `stapel-listings` admits 0.22, `stapel-categories` admits
