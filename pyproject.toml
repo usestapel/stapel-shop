@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.35"
+version = "0.2.36"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -24,6 +24,22 @@ classifiers = [
 ]
 # A composite introduces NO versions of its own — it pins the same ranges the
 # STAPEL_LIBS registry / each member lib already uses, fixing the combination.
+#
+# SIBLING RANGE POLICY (architect's ruling, 2026-09-11) — a COMPOSITE library
+# depends on its `stapel-*` siblings with a FLOOR and `<1.0` only. The house
+# pre-1.0 rule (minor = breaking) stays for LEAF libraries; it does not apply
+# here, because a composite that caps every sibling at the next minor becomes
+# the wall the moment any one of them ships a minor: on 2026-09-11 alone the
+# fleet hit `ResolutionImpossible` three times (categories 0.22,
+# vocabularies 0.3/0.4, reviews 0.7), each needing a cap-only release of this
+# package and of stapel-shop. Compatibility with a new sibling minor is proven
+# by evidence instead of forbidden by metadata: (a) this repo's CI runs a
+# `newest-siblings` matrix leg that ignores any lock and `pip install -U`s
+# every sibling inside the declared range before running the suite, and
+# (b) the fleet's joint-resolution gate runs before any image build.
+# `tests/test_sibling_ranges.py` pins the policy: a tighter cap fails CI.
+# The comments below record WHY each FLOOR is where it is; the upper bounds
+# they argue about are gone.
 dependencies = [
     "stapel-core>=0.10,<1.0",
     # attributes-v2 wave: categories 0.7.0, attributes 0.5.1 and listings
@@ -133,7 +149,7 @@ dependencies = [
     # Functions (`categories.path`/`.features`); it reads no `children`
     # payload and holds no tree endpoint of its own, so the new
     # discriminator is invisible here. The cap was the only wall.
-    "stapel-categories>=0.4,<0.23",
+    "stapel-categories>=0.4,<1.0",
     # <0.7, not <0.6: stapel-attributes 0.6.0 adds the composite `group` kind,
     # and stapel-categories 0.8.3 / stapel-listings 0.10.2 both require it.
     # A composite whose whole subject is an imported marketplace catalog —
@@ -175,7 +191,7 @@ dependencies = [
     # The cap moves so the fleet can install one attributes version; the suite
     # is green on 0.9.0 unchanged (tests/test_pin_coherence.py is the only file
     # that reads this line, and it reads it as the truth about the venv).
-    "stapel-attributes>=0.3,<0.10",
+    "stapel-attributes>=0.3,<1.0",
     # <0.9, not <0.8: stapel-listings 0.8.0 closes a live anonymous enumeration
     # oracle — the status probe returned owner_id and moderation_status for any
     # id, over sequential ids, including other people's drafts and deleted rows.
@@ -271,7 +287,7 @@ dependencies = [
     # calls neither the Function nor the command and sets neither setting —
     # shop's listings surface stays `listings.status` and the card projection,
     # unchanged — so the cap was the only wall.
-    "stapel-listings>=0.4,<0.23",
+    "stapel-listings>=0.4,<1.0",
     # <0.6, not <0.5: stapel-reviews 0.5.0 subscribes 'user.merged' and
     # re-parents an author's reviews to the surviving account. Every app that
     # handles 'user.deleted' and stays silent on 'user.merged' is an ERROR
@@ -290,7 +306,7 @@ dependencies = [
     # source_of_truth, and the `{avg, count}` aggregate carried on
     # `reviews.review.published`/`.hidden`, none of which changed shape. The
     # cap was the only wall.
-    "stapel-reviews>=0.2,<0.7",
+    "stapel-reviews>=0.2,<1.0",
 ]
 
 [project.urls]

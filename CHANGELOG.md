@@ -1,5 +1,43 @@
 # Changelog
 
+## [0.2.36] — 2026-09-11
+
+Patch. Every `stapel-*` sibling range widens to `>=<floor>,<1.0`; the floors
+and the comments arguing for them are untouched, and no behaviour moves.
+
+Architect's ruling, 2026-09-11: a COMPOSITE library depends on its siblings
+with a floor and `<1.0` only — compatibility with a new sibling minor is
+proven by the composite's own CI installing the newest sibling within range,
+and by the fleet's joint-resolution gate before any image build, not by a cap.
+
+The house pre-1.0 rule (minor = breaking) still governs LEAF libraries, which
+is where a cap buys something: a leaf caps a dependency it actually calls.
+This package calls none of its members' moving parts — it is a preset and one
+projection — so `<0.23` on stapel-categories and `<0.7` on stapel-reviews were
+never findings about compatibility, only about the calendar. What they bought
+was the wall: on 2026-09-11 alone the fleet answered `ResolutionImpossible`
+three times (categories 0.22, vocabularies 0.3 then 0.4, reviews 0.7), each
+costing a cap-only release of this package AND of stapel-classified before an
+image could be built at all. 0.2.33, 0.2.34 and 0.2.35 are that toll.
+
+What replaces the cap:
+
+- `.github/workflows/ci.yml` gains a `newest-siblings` matrix leg. It takes no
+  pip cache, installs the package editable, then upgrades every `stapel-*`
+  requirement to the newest release inside the declared range in ONE pip call
+  (so pip resolves them jointly, the same question the fleet's pre-build gate
+  asks), prints what it got, and runs the whole suite — `test_pin_coherence.py`
+  included, which then reads the newest set. A sibling minor that really does
+  break this composite turns red the day it is published.
+- `tests/test_sibling_ranges.py` holds the other end: every `stapel-*`
+  requirement in `pyproject.toml`, runtime and extras alike, must carry exactly
+  one floor and exactly one `<1.0`. Reinstate a tighter cap and it fails with
+  the ruling's sentence.
+
+Verified against the newest published siblings (stapel-core 0.64.0,
+stapel-categories 0.22.4, stapel-attributes 0.9.4, stapel-listings 0.22.10,
+stapel-reviews 0.7.0): 33 passed.
+
 ## [0.2.35] — 2026-09-10
 
 cap-only: stapel-categories <0.23 (0.22.0 adds `children_axis_tag`,
