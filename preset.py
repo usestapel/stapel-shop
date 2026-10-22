@@ -20,9 +20,13 @@ INSTALLED_APPS = [
 # (url_prefix, urlconf_module) — mount each one with
 #   path(prefix, include(module))
 # The composite itself mounts NO urls (http=False): it only carries glue.
+# stapel-categories and stapel-listings contribute only ``v1/`` and expect the
+# host to supply ``<mod>/api/``; a bare ``<mod>/`` serves ``/listings/v1/...``,
+# which every client of the canon (``/listings/api/v1/...``) misses. The
+# stapel-tools registry mounts the same prefixes (stapel-preset-gate).
 URL_INCLUDES = [
-    ("categories/", "stapel_categories.urls"),
-    ("listings/", "stapel_listings.urls"),
+    ("categories/api/", "stapel_categories.urls"),
+    ("listings/api/", "stapel_listings.urls"),
     ("reviews/", "stapel_reviews.urls"),
 ]
 

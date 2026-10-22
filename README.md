@@ -24,7 +24,7 @@ pip install stapel-shop
 
 | Fact | Value |
 |---|---|
-| Version | `0.2.36` |
+| Version | `0.2.37` |
 | Python | `>=3.11` (3.11, 3.12, 3.13, 3.14) |
 | Fleet dependencies | [`stapel-attributes`](https://github.com/usestapel/stapel-attributes) · [`stapel-categories`](https://github.com/usestapel/stapel-categories) · [`stapel-listings`](https://github.com/usestapel/stapel-listings) · [`stapel-reviews`](https://github.com/usestapel/stapel-reviews) |
 
@@ -67,8 +67,8 @@ for _k, _v in preset.SETTINGS_DEFAULTS.items():
 from django.urls import include, path
 
 urlpatterns = [
-    path("categories/", include("stapel_categories.urls")),
-    path("listings/", include("stapel_listings.urls")),
+    path("categories/api/", include("stapel_categories.urls")),
+    path("listings/api/", include("stapel_listings.urls")),
     path("reviews/", include("stapel_reviews.urls")),
 ]
 ```

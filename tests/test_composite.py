@@ -110,3 +110,12 @@ def test_refusal_envelope_is_wired_in_this_harness():
     # ``stapel_core.django.exception_handler_checks`` (core 0.61.1) so the
     # test runs on this package's declared stapel-core floor.
     assert api_settings.EXCEPTION_HANDLER is stapel_exception_handler
+
+
+def test_categories_and_listings_mount_under_api():
+    """BK-3: both contribute only ``v1/``; a bare ``<mod>/`` mount serves
+    ``/listings/v1/...`` while the canon and every client call
+    ``/listings/api/v1/...``."""
+    mounts = {module: prefix for prefix, module in preset.URL_INCLUDES}
+    assert mounts["stapel_categories.urls"] == "categories/api/"
+    assert mounts["stapel_listings.urls"] == "listings/api/"

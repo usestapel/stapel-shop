@@ -33,8 +33,8 @@ for _k, _v in preset.SETTINGS_DEFAULTS.items():
 from django.urls import include, path
 
 urlpatterns = [
-    path("categories/", include("stapel_categories.urls")),
-    path("listings/", include("stapel_listings.urls")),
+    path("categories/api/", include("stapel_categories.urls")),
+    path("listings/api/", include("stapel_listings.urls")),
     path("reviews/", include("stapel_reviews.urls")),
 ]
 ```

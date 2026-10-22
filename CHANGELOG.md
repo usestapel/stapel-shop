@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.37] — 2026-10-22
+
+Patch. **The preset mounts categories and listings under `<mod>/api/`.**
+
+Both modules contribute only `v1/` and expect the host to supply
+`<mod>/api/`. The preset mounted them at a bare `categories/` and
+`listings/`, so a host that copied it served `/listings/v1/...` while the
+canon, the generated client and `@stapel/listings-react` call
+`/listings/api/v1/...` — every request a 404. The stapel-tools registry
+already mounted the canonical prefixes; `stapel-preset-gate` now holds the
+preset and the registry equal.
+
 ## [0.2.36] — 2026-09-11
 
 Patch. Every `stapel-*` sibling range widens to `>=<floor>,<1.0`; the floors
