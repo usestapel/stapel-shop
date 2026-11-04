@@ -119,3 +119,14 @@ def test_categories_and_listings_mount_under_api():
     mounts = {module: prefix for prefix, module in preset.URL_INCLUDES}
     assert mounts["stapel_categories.urls"] == "categories/api/"
     assert mounts["stapel_listings.urls"] == "listings/api/"
+
+
+def test_orders_companion_buys_listings_through_listings_own_function():
+    """The preset registers orders' `listing` type against a Function listings
+    really provides — a default naming a function nobody answers would turn
+    every add-to-cart into a 503."""
+    from stapel_core.comm.registry import function_registry
+
+    entry = preset.SETTINGS_DEFAULTS["STAPEL_ORDERS"]["PURCHASABLE_TYPES"]["listing"]
+    assert entry == {"resolve": "listings.purchasables"}
+    assert entry["resolve"] in function_registry.names()

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.37"
+version = "0.2.38"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -287,7 +287,9 @@ dependencies = [
     # calls neither the Function nor the command and sets neither setting —
     # shop's listings surface stays `listings.status` and the card projection,
     # unchanged — so the cap was the only wall.
-    "stapel-listings>=0.4,<1.0",
+    # >=0.28: the preset registers the orders companion's `listing`
+    # purchasable type against `listings.purchasables`, which 0.28.0 adds.
+    "stapel-listings>=0.28,<1.0",
     # <0.6, not <0.5: stapel-reviews 0.5.0 subscribes 'user.merged' and
     # re-parents an author's reviews to the surviving account. Every app that
     # handles 'user.deleted' and stays silent on 'user.merged' is an ERROR

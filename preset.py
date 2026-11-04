@@ -50,4 +50,13 @@ SETTINGS_DEFAULTS = {
             },
         },
     },
+    # stapel-orders is a companion of this composite, not a member: a project
+    # that installs it gets a cart over the catalog's listings with no glue.
+    # Orders is purchasable-generic and ships an EMPTY registry; the listing
+    # resolver is listings' own Function (stapel-listings >= 0.28).
+    "STAPEL_ORDERS": {
+        "PURCHASABLE_TYPES": {
+            "listing": {"resolve": "listings.purchasables"},
+        },
+    },
 }

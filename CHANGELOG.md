@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.38] — 2026-11-05
+
+Patch. **The preset carries the orders companion's `listing` purchasable.**
+`SETTINGS_DEFAULTS["STAPEL_ORDERS"]` registers `listing` against
+`listings.purchasables`, so a project that installs the cart module next to
+this composite sells its catalog with no glue. The stapel-listings floor
+moves to 0.28 (the release that provides that Function).
+
 ## [0.2.37] — 2026-10-22
 
 Patch. **The preset mounts categories and listings under `<mod>/api/`.**
