@@ -61,10 +61,6 @@ def pytest_configure(config):
                 "BACKEND": "stapel_search.backends.naive.NaiveSearchBackend",
             },
         )
-        from stapel_search.tasks import get_search_beat_schedule
-
-        settings.CELERY_BEAT_SCHEDULE = get_search_beat_schedule()
-
         import django
 
         django.setup()
