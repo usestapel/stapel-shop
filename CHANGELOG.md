@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.39] — 2026-11-05
+
+Patch. **The composite declares the `listing` search source.**
+stapel-search ships no sources of its own, so a host that installed the
+search companion next to this composite booted with `stapel_search.W001` and
+its search page answered nothing. `stapel_shop.search_sources` now carries
+the source (`listings.search_documents` / `listings.search_export`, the
+`listing.*` invalidation signals, listings' own `INDEXED_STATUSES`) and the
+preset names it in `SETTINGS_DEFAULTS["STAPEL_SEARCH"]["SOURCES"]`
+(`search_sources.LISTING_SOURCE`). The stored card carries title, price,
+currency, place, gallery refs and publication time. The test suite installs
+stapel-search (the `all` extra) and proves a published listing is answered
+by `search.query`.
+
 ## [0.2.38] — 2026-11-05
 
 Patch. **The preset carries the orders companion's `listing` purchasable.**

@@ -8,6 +8,8 @@ same wiring from the STAPEL_LIBS registry; this module is the single source
 a hand-written settings.py/urls.py copies from instead.
 """
 
+from .search_sources import LISTING_SOURCE
+
 # Dotted app paths, in mount order. L1 libraries (stapel-attributes) are pip
 # dependencies, NOT Django apps — deliberately absent here.
 INSTALLED_APPS = [
@@ -57,6 +59,15 @@ SETTINGS_DEFAULTS = {
     "STAPEL_ORDERS": {
         "PURCHASABLE_TYPES": {
             "listing": {"resolve": "listings.purchasables"},
+        },
+    },
+    # stapel-search is a companion and ships BUILTIN_SOURCES = {}: it knows
+    # nothing about listings. Without a source a host boots with
+    # stapel_search.W001 and its search page is empty, so the composite
+    # declares the one corpus it has.
+    "STAPEL_SEARCH": {
+        "SOURCES": {
+            "listing": LISTING_SOURCE,
         },
     },
 }

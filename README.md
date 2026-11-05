@@ -10,7 +10,7 @@
 [![license](https://img.shields.io/github/license/usestapel/stapel-shop)](https://github.com/usestapel/stapel-shop/blob/main/LICENSE)
 [![llms.txt](https://img.shields.io/badge/llms.txt-blue)](https://github.com/usestapel/stapel-shop/blob/main/docs/llms.txt)
 
-> Composite preset for a catalog shop (categories + typed attributes + listings + reviews): wires stapel-categories, stapel-listings and stapel-reviews into one INSTALLED_APPS/urls/config bundle, defaults reviews' TARGET_TYPES to the catalog's listings, and owns the one piece of real cross-domain glue a composite is allowed to know both sides of: ListingReviewSummaryProjection (reviews -> listings per-listing rating aggregate, local live_query in the monolith or event-carried state transfer when reviews is split into its own service).
+> Composite preset for a catalog shop (categories + typed attributes + listings + reviews): wires stapel-categories, stapel-listings and stapel-reviews into one INSTALLED_APPS/urls/config bundle, defaults reviews' TARGET_TYPES to the catalog's listings, and owns the one piece of real cross-domain glue a composite is allowed to know both sides of: ListingReviewSummaryProjection (reviews -> listings per-listing rating aggregate, local live_query in the monolith or event-carried state transfer when reviews is split into its own service). It also declares the `listing` search source (stapel_shop.search_sources.listing_source, named by SETTINGS_DEFAULTS['STAPEL_SEARCH']['SOURCES']), so a host that installs the stapel-search companion indexes the catalog instead of booting with stapel_search.W001.
 
 Part of the [Stapel framework](https://github.com/usestapel) — composable Django apps that deploy as a monolith or as microservices without changing module code.
 
@@ -24,7 +24,7 @@ pip install stapel-shop
 
 | Fact | Value |
 |---|---|
-| Version | `0.2.38` |
+| Version | `0.2.39` |
 | Python | `>=3.11` (3.11, 3.12, 3.13, 3.14) |
 | Fleet dependencies | [`stapel-attributes`](https://github.com/usestapel/stapel-attributes) · [`stapel-categories`](https://github.com/usestapel/stapel-categories) · [`stapel-listings`](https://github.com/usestapel/stapel-listings) · [`stapel-reviews`](https://github.com/usestapel/stapel-reviews) |
 

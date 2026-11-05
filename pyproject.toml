@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stapel-shop"
-version = "0.2.38"
+version = "0.2.39"
 description = "Composite: catalog shop — categories + attributes + listings + reviews, with cross-domain glue projections"
 readme = "README.md"
 license = { text = "MIT" }
@@ -319,7 +319,9 @@ Changelog = "https://github.com/usestapel/stapel-shop/blob/main/CHANGELOG.md"
 Issues = "https://github.com/usestapel/stapel-shop/issues"
 
 [project.optional-dependencies]
-all = []
+# The companion whose source this composite declares (search_sources); the
+# suite proves the declaration against the real index.
+all = ["stapel-search>=0.18,<1.0"]
 
 [tool.setuptools]
 package-dir = {"stapel_shop" = "."}

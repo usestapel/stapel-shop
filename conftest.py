@@ -3,6 +3,8 @@ def pytest_configure(config):
 
     from stapel_core.testing import BASE_REST_FRAMEWORK
 
+    from stapel_shop import preset
+
     if not settings.configured:
         settings.configure(
             SECRET_KEY="test-secret-key-not-for-production",
@@ -18,6 +20,9 @@ def pytest_configure(config):
                 "stapel_categories",
                 "stapel_listings",
                 "stapel_reviews",
+                # A companion, not a member: installed here so the source
+                # this composite declares is proved against the real index.
+                "stapel_search",
                 "stapel_shop",
             ],
             AUTH_USER_MODEL="users.User",
@@ -49,7 +54,17 @@ def pytest_configure(config):
             REST_FRAMEWORK={
                 "EXCEPTION_HANDLER": BASE_REST_FRAMEWORK["EXCEPTION_HANDLER"],
             },
+            # The preset's own source declaration, under test, on the naive
+            # engine (the Postgres default needs Postgres).
+            STAPEL_SEARCH={
+                **preset.SETTINGS_DEFAULTS.get("STAPEL_SEARCH", {}),
+                "BACKEND": "stapel_search.backends.naive.NaiveSearchBackend",
+            },
         )
+        from stapel_search.tasks import get_search_beat_schedule
+
+        settings.CELERY_BEAT_SCHEDULE = get_search_beat_schedule()
+
         import django
 
         django.setup()

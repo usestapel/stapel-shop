@@ -1,7 +1,7 @@
 {
   "module": "stapel-shop",
-  "version": "0.2.38",
-  "provides": "Composite preset for a catalog shop (categories + typed attributes + listings + reviews): wires stapel-categories, stapel-listings and stapel-reviews into one INSTALLED_APPS/urls/config bundle, defaults reviews' TARGET_TYPES to the catalog's listings, and owns the one piece of real cross-domain glue a composite is allowed to know both sides of: ListingReviewSummaryProjection (reviews -> listings per-listing rating aggregate, local live_query in the monolith or event-carried state transfer when reviews is split into its own service).",
+  "version": "0.2.39",
+  "provides": "Composite preset for a catalog shop (categories + typed attributes + listings + reviews): wires stapel-categories, stapel-listings and stapel-reviews into one INSTALLED_APPS/urls/config bundle, defaults reviews' TARGET_TYPES to the catalog's listings, and owns the one piece of real cross-domain glue a composite is allowed to know both sides of: ListingReviewSummaryProjection (reviews -> listings per-listing rating aggregate, local live_query in the monolith or event-carried state transfer when reviews is split into its own service). It also declares the `listing` search source (stapel_shop.search_sources.listing_source, named by SETTINGS_DEFAULTS['STAPEL_SEARCH']['SOURCES']), so a host that installs the stapel-search companion indexes the catalog instead of booting with stapel_search.W001.",
   "axes": [],
   "extension_points": [],
   "operations_total": 0,

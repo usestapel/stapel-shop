@@ -9,4 +9,4 @@ the composite is the one place allowed to know both sides.
 Importable without Django settings; ``preset`` is plain data.
 """
 
-__all__ = ["preset"]
+__all__ = ["preset", "search_sources"]
