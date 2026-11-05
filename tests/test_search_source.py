@@ -38,9 +38,9 @@ def test_source_resolves_against_listings_functions():
 
 
 def test_host_boots_without_search_w001():
-    from django.core import checks
+    from stapel_search.checks import check_sources
 
-    ids = {m.id for m in checks.run_checks()}
+    ids = {m.id for m in check_sources(None)}
     assert "stapel_search.W001" not in ids
     assert "stapel_search.E004" not in ids
 
